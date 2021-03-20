@@ -1,0 +1,1224 @@
+﻿@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Chat</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Caveat:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script&amp;subset=vietnamese" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=vietnamese" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="~/Content/css/chat.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.js"
+			integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+			crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body style="overflow: hidden;" onload="setActiveButton('messages'); changeContextButtons('messages');">
+	<div class="row" style="height: 100%; width: 100%; margin: 0px;">
+		<!-- Message Panel  -->
+		<div class="col-sm-4 col-md-3 messagePanel">
+			<div class="messagePanelPadding">
+				<div class="media">
+					<div class="media-left dropdown">
+						<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+							@if (ViewBag.currentUser.profilePicture == null || ViewBag.currentUser.profilePicture == "")
+							{
+								<img class="media-object img-lg" src="../Content/Images/man.png" alt="Profile Picture">
+							}
+							else
+							{
+								<img class="media-object img-lg" src="../Content/UserContent/UserImages/@ViewBag.currentUser.profilePicture" alt="Profile Picture">
+							}
+						</a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header"></li>
+							<li> <a class="normalText " href="#">Settings</a></li>
+							<li class="divider"></li>
+							<li> <a class="normalText " href="@Url.Action("Logout","Users")">Switch Account</a></li>
+							<li> <a class="normalText " href="@Url.Action("Logout","Users")">Sign out</a></li>
+						</ul>
+						<div id="currentUserState" class=""></div>
+					</div>
+					<div class="media-body" style="padding-top: 5px">
+						<h3 class="media-heading headerText" style="display: inline-block;">@ViewBag.currentUser.firstName @ViewBag.currentUser.lastName</h3>
+						<div class="btn-group" role="group" style="display: block;">
+							<button type="button" id="currentUserStateText" class="btn btn-xs dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: rgba(0,0,0,0); color: #5D5D5D; font-size: 14px; padding-left: 1px">
+								Active <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button style="background-color: transparent; border:none; width: 100%;" class="normalText" onclick="setUserState('active'); getUserState();">Active</button>
+									<div class="divider"></div>
+								<li><button style="background-color: transparent; border:none; width: 100%;" class="normalText" onclick="setUserState('busy'); getUserState();">Do not disturb</button>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- Search -->
+				<div class="input-group" style="width: 100%;">
+					<span class="input-group-addon" id="sizing-addon3"><i class="fas fa-search" style="display: inline;"></i></span>
+					<input type="search" id="searchLeftPanel" class="searchBox lightText" placeholder="Search for people & groups" onkeyup="searchLeftPanel('text');">
+				</div>
+				<!-- Nav Left Panel -->
+
+				<div class="row" style="padding-top: 5px">
+					<div class="col-xs-4" style="padding-right: 1px;">
+						<button type="button" id="active" class="btn btn-lg messagePanelBtn lightText messagesBtn" style=" width: 100%" onclick="setActiveButton('messages'); changeContextButtons('messages'); refreshGroups(); searchLeftPanel('all'); "><i class="fas fa-comments" style=" font-size: 20px"></i><br>Chats</button>
+					</div>
+					<div class="col-xs-4" style="padding-left: 5px; padding-right: 5px;">
+						<button type="button" class="btn btn-lg messagePanelBtn lightText friendsBtn" style="width: 100%" onclick="setActiveButton('friends'); changeContextButtons('friends'); refreshFriends(); searchLeftPanel('all');"><i class="fas fa-user-friends" style=" font-size: 20px"></i><br>Friends</button>
+					</div>
+					<div class="col-xs-4" style="padding-left: 1px;">
+						<button type="button" class="btn btn-lg messagePanelBtn lightText profileBtn dropdown-toggle" data-toggle="modal" data-target="#ProfileModal" style="width: 100%" onclick="setActiveButton('profile'); changeContextButtons('profile');"><i class="fas fa-id-badge" style=" font-size: 20px"></i><br>Profile</button>
+					</div>
+				</div>
+
+				<div id="leftPanelContextButtons"></div>
+				<!-- Error Modal-->
+				<div class="modal fade" id="errorModal" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">@TempData["error"]</h4>
+							</div>
+							<div class="modal-body">
+								<p>"@TempData["errorDetail"]"</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Chat modal-->
+				<div class="modal modal-tall fade" id="RoomChatModal" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content modal-tall">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<center><h4 class="modal-title " style="vertical-align: middle;">NEW CHAT ROOM</h4></center>
+							</div>
+							<div class="modal-body" style="padding: 0px;">
+								<div class="insertGroupName" style="height:8%;">
+									<center><input type="text" placeholder="Room name" id="newGroupName" style="text-align: center; padding-top: 15px; padding-right: 0px;"></center>
+								</div>
+								<form style="height: 10%;">
+									<div class="input-group" style="width: 100%; height:100%; border-top: 1px solid rgba(0,0,0,0.2); border-bottom: 1px solid rgba(0,0,0,0.2);">
+										<span class="input-group-addon" id="sizing-addon4"><i class="fas fa-search" style="display: inline; height:100%; "></i></span>
+										<center style="height:100%;">
+											<input type="text" id="addUsersToGroup" onkeyup="searchUsers('messages');" class="searchName lightText" placeholder="Add to Group" style="border: none; height:100%;">
+										</center>
+									</div>
+								</form>
+								<div class="searchFriendContainer" style="height:82%;">
+								</div>
+							</div>
+							<div class="modal-footer" style="padding: 0px;">
+								<div class="addedFriendContainer pull-left"></div>
+								<button type="button" class="btn messagePanelBtn active pull-right" data-dismiss="modal" style="margin-top: 10px;" onclick="createNewGroup();">Done</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Friends modal-->
+				<div class="modal modal-tall fade" id="FriendsAddModal" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content modal-tall">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<center><h4 class="modal-title " style="vertical-align: middle;">ADD NEW PEOPLE</h4></center>
+							</div>
+							<div class="modal-body" style="padding: 0px;">
+								<form style="height: 10%;">
+									<div class="input-group" style="width: 100%; height:100%; border-top: 1px solid rgba(0,0,0,0.2); border-bottom: 1px solid rgba(0,0,0,0.2);">
+										<span class="input-group-addon" id="sizing-addon4"><i class="fas fa-search" style="display: inline; height:100%; "></i></span>
+										<center style="height:100%;">
+											<input type="text" id="addUsersToFriend" onkeyup="searchUsers('friends')" class="searchName lightText" placeholder="Search username" style="border: none; height:100%;">
+										</center>
+									</div>
+								</form>
+								<div class="searchFriendToAddContainer" style="height:90%;">
+								</div>
+							</div>
+							<div class="modal-footer" style="padding: 0px;">
+								<button type="button" class="btn messagePanelBtn active pull-right" data-dismiss="modal" style="margin-top: 10px;" onclick="">Done</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Profile modal-->
+				<div class="modal modal-tall fade" id="ProfileModal" role="dialog">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content ">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<center><h4 class="modal-title " style="vertical-align: middle;">MY PROFILE</h4></center>
+							</div>
+							<div class="modal-body" style="padding: 0px;">
+								<div class="ProfileContainer">
+									<div class="text-center">
+										@if (ViewBag.currentUser.profilePicture == null || ViewBag.currentUser.profilePicture == "")
+										{
+											<img id="profileEditImage" src="../Content/Images/man.png" class="avatar" style="border-radius: 5em; height: 200px;" alt="avatar">
+										}
+										else
+										{
+											<img id="profileEditImage" src="../Content/UserContent/UserImages/@ViewBag.currentUser.profilePicture" class="avatar" style="border-radius: 5em; height: 200px;" alt="avatar">
+										}
+									</div>
+									<form class="form-horizontal" role="form" id="updateProfileForm" method="post" action="@Url.Action("Edit","Users")" enctype="multipart/form-data">
+										<div class="text-center">
+											<div style="position: sticky;">
+												<label for="file-input">
+													<span class="edittext" style="cursor: pointer;">Change your profile avatar</span>
+												</label>
+												<input type="file" accept="image/*" name="userImage" id="file-input" style="display:none" onchange="uploadImage(event);">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">First name:</label>
+											<div class="col-sm-7">
+												<input class="form-control" name="firstName" style="border-color: #00C4AB" type="text" value="@ViewBag.currentUser.firstName">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Last name:</label>
+											<div class="col-sm-7">
+												<input class="form-control" name="lastName" style="border-color: #00C4AB" type="text" value="@ViewBag.currentUser.lastName">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Email:</label>
+											<div class="col-sm-7">
+												<input class="form-control" name="email" style="border-color: #00C4AB" type="email" value="@ViewBag.currentUser.email">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Phone:</label>
+											<div class="col-sm-7">
+												<input class="form-control" name="phone" style="border-color: #00C4AB" type="tel" value="@ViewBag.currentUser.phone">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Username:</label>
+											<div class="col-sm-7">
+												<input class="form-control" name="username" disabled style="border-color: #00C4AB" type="text" value="@ViewBag.currentUser.username">
+											</div>
+											<span></span>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Password:</label>
+											<div class="col-sm-7">
+												<input class="form-control" name="password" required style="border-color: #00C4AB" type="password" value="">
+											</div>
+											<span></span>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">New Password:</label>
+											<div class="col-sm-7">
+												<input class="form-control" id="profileEditNewPassword" oninput="requireConfirm();" name="newPassword" pattern="(?=.*\d)(?=.*[a-z]).{8,}" title="Must contain at least one number and one lowercase letter, and at least 8 or more characters" style="border-color: #00C4AB" type="password" value="">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Confirm new password:</label>
+											<div class="col-sm-7">
+												<input class="form-control" id="profileEditConfirmPassword" name="confirmPassword" style="border-color: #00C4AB" type="password" onkeyup="validateNewPassword();" value="">
+											</div>
+											<span id="confirmMessage" style="display:block"></span>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="modal-footer" style="padding: 5px; padding-top: 10px;">
+								<button type="submit" form="updateProfileForm" class="btn btn-primary pull-right" style="background-color: #00C4AB; border-color: #00C4AB">Save Changes</button>
+								<button id="closeModal" class="btn btn-default pull-right" data-dismiss="modal" value="Cancel">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="left-content-container"></div>
+				<div id="left-content-search" class="hide"></div>
+				<div id="leftPanelDataCheck" class="hide"></div>
+			</div>
+		</div>
+		<!-- Chat Panel -->
+		<div class="col-sm-8 col-md-7 chatPanel">
+			<div class="head-container" style="position: relative;"></div>
+			<div id="mainchatContainer" class="mainchat-container">
+				<section class="message">
+					<div class="grid-message"></div>
+					<div class="grid-message hide"></div>
+				</section>
+			</div>
+			<div class="chatbox-container" style="padding-top: 5px;">
+				<div class="compose">
+					<textarea id="messageTextContent" placeholder="Type a message" onkeyup="checkSend(event);"></textarea>
+					<div class="compose-dock">
+						<div class="dock">
+							<i id="chatSendButton" class="fas fa-paper-plane" style="font-size: 25px"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Tool Panel -->
+		<div class="hidden-sm col-md-2 toolPanel">
+
+			<!--  StickerContainer -->
+			@{
+				int categoryNumber = 1;
+			}
+			<div id="EmojiContainer" class="toolContainerContent">
+				<div class="leftheader">
+					<center>          Emojis        </center>
+				</div>
+				<div class="row tab" style="position: relative; padding-left: 10px; padding-right: 15px;">
+					@foreach (var category in ViewBag.emojis.emojiList)
+					{
+						var tabNumber = "Emo" + categoryNumber.ToString();
+						<div class="col-xs-2 " style="padding-right: 1px;padding-left: 1px">
+							<button type="button" class="squarebut tablinks" style="padding: 1px; font-size: 30px;" onclick="openTab(event,'@tabNumber')">
+								@category.Value[0]
+							</button>
+						</div>
+						categoryNumber++;
+					}
+				</div>
+				@{
+					var tabId = 1;
+				}
+				<div class="ItemContainer" style="padding-top: 10px;">
+
+					@foreach (var category in ViewBag.emojis.emojiList)
+					{
+						var tabNumber = "Emo" + tabId.ToString();
+						<div id="@tabNumber" class="tabcontent container">
+							<div class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+								@foreach (var emoji in category.Value)
+								{
+									<div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+										<button type="button" style="font-size:28px;" class="squarebut" onclick="addEmoToChatBox('@emoji')">
+											@emoji
+										</button>
+									</div>
+								}
+							</div>
+						</div>
+						tabId++;
+					}
+				</div>
+
+			</div>
+
+			<!--  AttachmentContainer -->
+			<div id="AttachmentContainer" class="toolContainerContent"></div>
+
+
+			<!-- ImageContainer -->
+			<div id="ImageContainer" class="toolContainerContent"></div>
+
+			<!-- ProfileInfoContainer-->
+            <div id="ProfileInfoContainer" class="toolContainerContent" style="overflow-y: auto">
+                <div class="leftheader">
+                    <center>          Profile        </center>
+                    <!-- Display Avatar -->
+                </div>
+                <!-- Display Username -->
+                <div class="headerText">
+                    <center id="NumberUser"></center>
+                </div>
+                <div class="infocontainer" style="margin-top: 20px; padding: 2px; margin-left: 4px; overflow-y:  auto;">
+                    <div class="media">
+                        <div class="media-left" style="padding-top: 5px; padding-left: 10px;" >
+                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                @if (ViewBag.currentUser.profilePicture == null || ViewBag.currentUser.profilePicture == "")
+                                {
+                                    <img class="media-object img-lg" src="../Content/Images/man.png" alt="Profile Picture">
+                                }
+                                else
+                                {
+                                    <img class="media-object img-lg" src="../Content/UserContent/UserImages/@ViewBag.currentUser.profilePicture" alt="Profile Picture">
+                                }
+                            </a>
+                        </div>
+                        <div class="media-body" style="padding-top: 5px">
+                            <h3 class="media-heading headerText" style="display: inline-block;">@ViewBag.currentUser.firstName @ViewBag.currentUser.lastName</h3>
+                            <div class="btn-group" role="group" style="display: block;">
+                                <button type="button" id="currentUserStateText" class="btn btn-xs dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: rgba(0,0,0,0); color: #5D5D5D; font-size: 14px; padding-left: 1px">
+                                    Current User
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul style="list-style-type: none; padding-left: 10px; padding-top: 5px">
+                        <li class="titleText" style="padding-top: 10px;">AccountID: @ViewBag.currentUser.username</li>
+                        <li class="titleText" style="padding-top: 10px;">Email: @ViewBag.currentUser.email</li>
+                        @if (ViewBag.currentUser.phone == null || ViewBag.currentUser.phone == "")
+                        {
+                            <li class="titleText" style="padding-top: 10px;">Phone: </li>
+                        }
+                        else
+                        {
+                            <li class="titleText" style="padding-top: 10px;">Phone: @ViewBag.currentUser.phone</li>
+
+                        }
+                    </ul>
+                </div>
+                <div id="UserInGroup"></div>
+
+            </div>
+
+			<!--buttons-->
+			<div class="toolContainer" style="padding-top: 15px;">
+				<div class="row">
+					<div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+						<button type="button" id="toolContainerImage" onclick="setToolContainer('image')" class="squarebut toolContainerButton">
+							<i class="fas fa-image" style="font-size: 24px;"></i>
+						</button>
+					</div>
+					<div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+						<button type="button" id="toolContainerEmoji" onclick="setToolContainer('emoji')" data-toggle="popover" data-trigger="focus" class="squarebut toolContainerButton">
+							<i class="far fa-grin-squint-tears" style="font-size: 24px;"></i>
+						</button>
+					</div>
+					<div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+						<button type="button" id="toolContainerFile" onclick="setToolContainer('file')" class="squarebut toolContainerButton">
+							<i class="fas fa-paperclip" style="font-size: 24px;"></i>
+						</button>
+					</div>
+					<div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+						<button type="button" id="toolContainerUsers" onclick="setToolContainer('users')" class="squarebut toolContainerButton active">
+							<i class="fas fa-user-circle" style="font-size: 24px;"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+	//$('body').tooltip({
+	//	selector: '.tooltipHover', trigger: "hover"
+	//});
+
+	var error = "@TempData["error"]" != "@null";
+	if (error) {
+		$('#errorModal').modal("show");
+	}
+</script>
+
+<script>
+	function openTab(evt, tabName) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName("tablinks");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].style.backgroundColor = 'transparent';
+		}
+		document.getElementById(tabName).style.display = "block";
+		evt.currentTarget.style.backgroundColor = '#52E0D2';
+	}
+
+	function addEmoToChatBox(emo) {
+		var chatBox = document.getElementById("messageTextContent");
+		chatBox.value += emo;
+	}
+</script>
+
+<script type="text/javascript">
+
+    $('#chatSendButton').unbind().bind('click', postMessage);
+
+	var currentPanel;
+
+	function checkValidLength(text, type) {
+        if (text != null) {
+            if (type == "name") {
+                if (text.length > 20) {
+                    return text.substring(0, 17) + "...";
+                } else {
+                    return text;
+                }
+            } else {
+                if (text.length > 50) {
+                    return text.substring(0, 47) + "...";
+                } else {
+                    return text;
+                }
+            }
+			
+		} else {
+			return "";
+		}
+		
+	}
+
+	function setToolContainer(tool) {
+		var toolContainerButtons = document.getElementsByClassName("toolContainerButton");
+		for (var i = 0; i < toolContainerButtons.length; i++) {
+			if (toolContainerButtons[i].classList.contains("active")) {
+				toolContainerButtons[i].classList.remove("active");
+			}
+		}
+		var toolContainerContent = document.getElementsByClassName("toolContainerContent");
+		for (var i = 0; i < toolContainerContent.length; i++) {
+			toolContainerContent[i].style.display = "none";
+		}
+		if (tool == "users") {
+			toolContainerButtons["toolContainerUsers"].classList.add("active");
+			toolContainerContent["ProfileInfoContainer"].style.display = "block";
+		}
+		if (tool == "image") {
+			toolContainerButtons["toolContainerImage"].classList.add("active");
+			toolContainerContent["ImageContainer"].style.display = "block";
+		}
+		if (tool == "emoji") {
+			toolContainerButtons["toolContainerEmoji"].classList.add("active");
+			toolContainerContent["EmojiContainer"].style.display = "block";
+			document.getElementsByClassName("tablinks")[0].click();
+
+		}
+		if (tool == "file") {
+			toolContainerButtons["toolContainerFile"].classList.add("active");
+			toolContainerContent["AttachmentContainer"].style.display = "block";
+
+		}
+	}
+
+	document.getElementsByClassName("toolContainerButton")[3].click();
+
+	function requireConfirm() {
+		var newPassword = document.getElementById("profileEditNewPassword");
+		var confirmPassword = document.getElementById("profileEditConfirmPassword");
+		if (newPassword.value != "") {
+			confirmPassword.required = true;
+		} else {
+			confirmPassword.required = false;
+		}
+
+	}
+
+	var uploadImage = function (event) {
+		var profileEditImage = document.getElementById("profileEditImage");
+		profileEditImage.src = URL.createObjectURL(event.target.files[0]);
+	};
+
+	function setUserState(state) {
+		$.ajax({
+			type: "POST",
+			url: "/users/setActiveState",
+			data: {requestState : state},
+			dataType: "json",
+			success: function () {
+				console.log("setSuccess");
+			}
+		})
+	}
+
+	function getUserState() {
+		$.ajax({
+			type: "GET",
+			url: "/users/getActiveState",
+			dataType: "json",
+			success: function (json) {
+				if (json.isActive == true) {
+					if (json.isBusy == true) {
+						displayUserState("busy");
+					} else {
+						displayUserState("active");
+					}
+				}
+			}
+		})
+	}
+
+	function displayUserState(state) {
+		var stateDisplay = document.getElementById("currentUserState");
+		var stateDisplayText = document.getElementById("currentUserStateText");
+		if (state === "active") {
+			if (stateDisplay.classList.contains("big-dot-yellow")) {
+				stateDisplay.classList.replace("big-dot-yellow", "big-dot-green");
+			} else {
+				stateDisplay.classList.add("big-dot-green");
+			}
+			stateDisplayText.innerHTML = `Active ` + `<span class="caret"></span>`
+		}
+		if (state === "busy") {
+			if (stateDisplay.classList.contains("big-dot-green")) {
+				stateDisplay.classList.replace("big-dot-green", "big-dot-yellow");
+			} else {
+				stateDisplay.classList.add("big-dot-yellow");
+			}
+			stateDisplayText.innerHTML = `Busy ` + `<span class="caret"></span>`
+		}
+	}
+
+	function groupUsersChange(id, username) {
+		var clickedItem = document.getElementById(id);
+		if (clickedItem !== null) {
+			if (clickedItem.classList.contains("btnAdd")) {
+				var addBtn = document.getElementById("add" + id.substring(3));
+				var removeBtn = document.getElementById("remove" + id.substring(3));
+				var currentItems = document.getElementsByClassName("addedFriendContainer")[0].innerHTML.toString();
+				var currentItemImage = document.getElementById("searchUser" + id.substring(3));
+				var newItems = "";
+				var newID = id.substring(3);
+				newItems += `<img src="` + currentItemImage.src + `" id="` + newID + `" class="img-sm pull-left" data-hover="tooltip" title="`+ username +`" style="display:inline-block; margin-left:5px" />`;
+				document.getElementsByClassName("addedFriendContainer")[0].innerHTML = currentItems + newItems;
+				addBtn.disabled = true;
+				removeBtn.disabled = false;
+			}
+			else {
+				var item = document.getElementById(id.substring(6));
+				if (item !== null) {
+					var addBtn = document.getElementById("add" + id.substring(6));
+					var removeBtn = document.getElementById("remove" + id.substring(6));
+					item.remove();
+					addBtn.disabled = false;
+					removeBtn.disabled = true;
+				}
+			}
+		}
+	}
+
+    function leaveGroup(groupid) {
+        var group = {};
+        group.groupid = groupid;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Leave","Groups")",
+            data: JSON.stringify(group),
+            contentType: "application/json; charset: utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    alert("Leave Successfully! You are looking back a room that you've just leaved");
+                    refreshGroups();
+                    refreshUserInGroup(groupid);
+                }
+                else {
+                    if (response.detail == "You cannot leave") {
+                        alert("You cannot leave because you are room creator");
+                    }
+                    else if (response.detail == "Not loggged in") {
+                        window.location.href = "/users/login";
+                    }
+                }
+            }
+        })
+    }
+
+    function deleteGroup(groupid) {
+    var group = {};
+    group.groupid = groupid;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Delete","Groups")",
+            data: JSON.stringify(group),
+            contentType: "application/json; charset: utf-8",
+            dataType:"json",
+            success: function (response) {
+                if (response.success) {
+                    refreshGroups();
+                } else {
+                    if (response.detail == "You are not creator") {
+                        alert("You cannot delete this room! You are not room creator");
+                    }
+                    else if (response.detail == "Not logged in") {
+                        window.location.href = "/users/login";
+                    }
+                }
+            }
+        })
+    }
+
+
+
+	function createNewGroup() {
+		var usersList = [];
+		var newGroupName = document.getElementById("newGroupName").value;
+		var addedUsers = document.getElementsByClassName("addedFriendContainer")[0].children;
+		var addedUsersCount = addedUsers.length;
+		for (var i = 0; i < addedUsersCount; i++) {
+			usersList.push(addedUsers[i].id);
+		};
+		var newGroupData = { };
+		newGroupData.groupName = newGroupName;
+		newGroupData.createdBy = "@ViewBag.currentUser.id";
+		newGroupData.Users = usersList;
+		$.ajax({
+			type: "POST",
+			url: "@Url.Action("Create","Groups")",
+			data: JSON.stringify(newGroupData),
+			contentType: "application/json; charset: utf-8",
+			dataType: "json",
+			success: function (response) {
+				document.getElementById("newGroupName").value = "";
+				document.getElementsByClassName("addedFriendContainer")[0].innerHTML = "";
+				document.getElementsByClassName("searchFriendContainer")[0].innerHTML = "";
+				document.getElementById("addUsersToGroup").value = "";
+				setGroupHeader(response.groupId, response.groupName, response.isActive);
+			},
+			failure: function () {
+				console.log("fail");
+			}
+		})
+	}
+
+    function refreshUserInGroup(groupid) {
+        var users = "";
+        $.ajax({
+            type: "GET",
+            url: "/Groups/getUserInGroup/" + groupid,
+            dataType: "json",
+            success: function (json) {
+                $.each(json, function (i, user) {
+                    users +=
+                        `
+
+                        <div class="infocontainer" style="margin-top: 20px; padding: 2px; margin-left: 4px; overflow-y:  auto;">
+                            <div class="media-left" style="padding-top: 5px; padding-left: 10px;" >
+                                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                  <img class="media-object img-lg" src="../Content/UserContent/UserImages/` + user.picture + `" alt="Profile Picture">
+                                </a>
+                            </div>
+                            <div class="media-body" style="padding-top: 5px">
+                                <h3 class="media-heading headerText" style="display: inline-block;">`+ user.firstname + ` ` + user.lastname + `</h3>
+                                <div id = "MêmberType" class = "normalText"> `+ user.creator +` </div>
+                            </div>
+                            <ul style="list-style-type: none; padding-left: 10px; padding-top: 5px">
+                                <li class="titleText" style="padding-top: 10px;">AccountID: `+ user.username +`</li>
+                                <li class="titleText" style="padding-top: 10px;">Email: `+ user.email + `</li>
+                                <li class="titleText" style="padding-top: 10px;">Phone: `+ user.phone +`</li>
+
+                            </ul>
+                        </div>`
+                });
+                document.getElementById("UserInGroup").innerHTML = users;
+            }
+        })
+        $.ajax({
+            type: "GET",
+            url: "/Groups/getNumberMembers/" + groupid,
+            dataType: "json",
+            success: function (json) {
+                document.getElementById("NumberUser").innerText = json + " Members";
+            }
+        })
+    }
+
+	function refreshGroups() {
+		var groups = "";
+		var oldData = document.getElementById("left-content-container").innerHTML;
+		$.ajax({
+			type: "GET",
+			url: "/Users/groups/list",
+			dataType: "json",
+			success: function (json) {
+				$.each(json, function (i, group) {
+                    groups +=
+                        `<div id="groupMessagesPanel` + group.id + `" class="media msgHover" style = "padding-top: 5px; padding-left: 10px; padding-right: 10px; margin-top: 1px" onclick = "setGroupHeader('` + group.id + `', '` + group.groupName + `', ` + group.isActive + `); refreshUserInGroup(`+ group.id + `); setActiveMessage('groupMessagesPanel` + group.id +`'); " >
+							<div class="media-left media-top">
+									<img class="media-object img-sm" src="../Content/Images/teamwork.png">`
+					//if online
+					if (group.isActive == true) {
+						groups +=
+							`<div id = "groupLeftPanelActiveState` + group.id + `" class="dot-green" ></div>`
+					} else {
+						groups +=
+							`<div id = "groupLeftPanelActiveState` + group.id + `" class="dot-red" ></div>`
+					}
+					groups +=
+						`
+							</div>
+							<div class="media-body">
+								<h4 class="media-heading head-normalText" style="display: inline; cursor:default;">`+ checkValidLength(group.groupName, "name") + `</h4>
+								<small class="pull-right" style="display: block; margin-right: 5%; cursor:default;">`+ group.latestMessageTime + `</small>
+								<p class="normalText" style="cursor:default">`+ checkValidLength(group.latestMessageText,"msg") +`</p>
+							</div>
+						 </div>`
+				});
+				var dataCheck = document.getElementById("leftPanelDataCheck");
+                dataCheck.innerHTML = groups;
+                if (oldData.replace(" clicked","") != dataCheck.innerHTML) {
+					document.getElementById("left-content-container").innerHTML = groups;
+                }
+			}
+		})
+	}
+
+	function refreshFriends() {
+		var friends = "";
+		var oldData = document.getElementById("left-content-container").innerHTML;
+		$.ajax({
+			type: "GET",
+			url: "/Users/Friends/List",
+			dataType: "json",
+			success: function (json) {
+				$.each(json, function (i, friend) {
+					friends +=
+						`<div id="friendMedia` + friend.id + `" class="media msgHover" style = "padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px;" onclick="friendClick(` + friend.id + `, '` + friend.username + `');">
+							<div class="media-left media-top">
+								`;
+					if (friend.profilePicture != null && friend.profilePicture != "") {
+						friends += `<img class="media-object img-sm" src="../Content/UserContent/UserImages/` + friend.profilePicture + `">`
+					} else {
+						friends += `<img class="media-object img-sm" src="../Content/Images/man.png">`;
+					}
+					if (friend.isActive == true) {
+						if (friend.isBusy == true) {
+							friends +=
+								`<div class="dot-yellow"></div>
+								
+							</div>
+							<div class="media-body">
+								<h4 class="media-heading head-normalText" style="display: inline;">`+ friend.username + `</h4>
+                                <div class="pull-right" style = "display: inline;">
+                                <!-- three-dots -->
+                                    <button type="button" class="btn dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <i class="fas fa-ellipsis-v" style="font-size: 14px;"></i> </button>
+                                    <ul class="dropdown-menu pull-left" style="position: relative;">
+                                    <li onclick = "deleteFriend(`+ friend.id +`)" style = "cursor: pointer;"><a class="normalText">Delete Friend</a></li>
+                                    </ul>
+                                </div>
+								<p class="normalText">`+ friend.firstName + " " + friend.lastName + `</p>
+   
+							</div>
+						 </div>`
+						} else {
+							friends +=
+								`<div class="dot-green"></div>
+								
+							</div>
+							<div class="media-body">
+								<h4 class="media-heading head-normalText" style="display: inline;">`+ friend.username + `</h4>
+                                <div class="pull-right" style = "display: inline;">
+                                <!-- three-dots -->
+                                    <button type="button" class="btn dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <i class="fas fa-ellipsis-v" style="font-size: 14px;"></i> </button>
+                                    <ul class="dropdown-menu pull-left" style="position: relative;">
+                                    <li onclick = "deleteFriend(`+ friend.id +`)" style = "cursor: pointer;"><a class="normalText">Delete Friend</a></li>
+                                    </ul>
+                                </div>
+								<p class="lightText">`+ friend.firstName + " " + friend.lastName + `</p>
+							</div>
+						 </div>`
+						}
+
+					} else {
+						friends +=
+							`<div class="dot-red"></div>
+								
+							</div>
+							<div class="media-body">
+								<h4 class="media-heading head-normalText" style="display: inline;">`+ friend.username + `</h4>
+                                <div class="pull-right" style = "display: inline;">
+                                <!-- three-dots -->
+                                    <button type="button" class="btn dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <i class="fas fa-ellipsis-v" style="font-size: 14px;"></i> </button>
+                                    <ul class="dropdown-menu pull-left" style="position: relative;">
+                                    <li onclick = "deleteFriend(`+ friend.id +`)" style = "cursor: pointer;"><a class="normalText">Delete Friend</a></li>
+                                    </ul>
+                                </div>
+								<p class="lightText">`+ friend.firstName + " " + friend.lastName + `</p>
+							</div>
+						 </div>`
+					}
+				});
+				var dataCheck = document.getElementById("leftPanelDataCheck");
+				dataCheck.innerHTML = friends;
+				if (oldData != dataCheck.innerHTML) {
+				document.getElementById("left-content-container").innerHTML = friends;
+				}
+			}
+		})
+    }
+    
+
+	function setActiveButton(btnName) {
+		if (btnName === "messages") {
+			var activeButton = document.getElementById("active");
+			activeButton.removeAttribute("id");
+			activeButton = document.getElementsByClassName("messagesBtn")[0];
+			activeButton.setAttribute("id", "active");
+			currentPanel = "messages";
+		}
+		if (btnName === "friends") {
+			var activeButton = document.getElementById("active");
+			activeButton.removeAttribute("id");
+			activeButton = document.getElementsByClassName("friendsBtn")[0];
+			activeButton.setAttribute("id", "active");
+			currentPanel = "friends";
+		}
+		if (btnName === "profile") {
+			var activeButton = document.getElementById("active");
+			activeButton.removeAttribute("id");
+			activeButton = document.getElementsByClassName("profileBtn")[0];
+			activeButton.setAttribute("id", "active");
+			document.getElementById("left-content-container").innerHTML = "";
+			currentPanel = "profile";
+		}
+	}
+
+	function changeContextButtons(btnName) {
+		if (btnName === "messages") {
+			var x = document.getElementById("leftPanelContextButtons");
+			x.innerHTML = "";
+			x.innerHTML =
+				`<div class="btn-group" role="group" style="padding-top: 10px;">
+					<button type="button" class="btn dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: rgba(0,0,0,0); color: #5D5D5D; padding-left: 1px">
+						RECENT CHATS <span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li onclick="searchLeftPanel('all');"><h4 style="cursor: pointer; text-align: center; margin: 0; padding-top: 10px; padding-bottom:10px;" class="normalText msgHover">View all Groups</h4></li>
+						<li onclick="searchLeftPanel('active');"><h4 style="cursor: pointer; text-align: center;margin: 0; padding-top: 10px; padding-bottom:10px;" class="normalText msgHover">View all active Groups</h4></li>
+					</ul>
+				</div>
+				<div class="pull-right">
+					<button class=" btn messagePanelBtn dropdown-toggle active" type="button" data-toggle="modal" data-target="#RoomChatModal" style="margin-top: 5px;margin-bottom: 1px; width: 90px;"><i class="fas fa-plus"></i>  Chat</button>
+				</div>`
+		}
+		if (btnName === "friends") {
+			var x = document.getElementById("leftPanelContextButtons");
+			x.innerHTML = "";
+			x.innerHTML =
+				`<div class="btn-group" role="group" style="padding-top: 10px;">
+					<button type="button" class="btn dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: rgba(0,0,0,0); color: #5D5D5D; padding-left: 1px">
+					FRIENDS <span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li onclick="searchLeftPanel('all');"><h4 style="cursor: pointer; text-align: center;margin: 0; padding-top: 10px; padding-bottom:10px;" class="normalText msgHover">View all Friends</h4></li>
+						<li onclick="searchLeftPanel('active');"><h4 style="cursor: pointer; text-align: center;margin: 0; padding-top: 10px; padding-bottom:10px;" class="normalText msgHover">View all active Friends</h4></li>
+					</ul>
+				</div>
+				<div class="pull-right">
+					<button class=" btn messagePanelBtn dropdown-toggle active" type="button" data-toggle="modal" data-target="#FriendsAddModal" style="margin-top: 5px;margin-bottom: 1px; width: 90px;"><i class="fas fa-plus"></i>  Friends</button>
+				</div>`
+
+		}
+		if (btnName === "profile") {
+			var x = document.getElementById("leftPanelContextButtons");
+			x.innerHTML = "";
+		}
+	}
+
+	function searchUsers(searchBoxId) {
+		if (searchBoxId === 'messages') {
+			var username = document.getElementById('addUsersToGroup').value;
+			var result = "";
+			$.ajax({
+				type: "GET",
+				url: "/Users/Search/",
+				data: { username: username },
+				dataType: "json",
+				success: function (json) {
+					console.log(json);
+					$.each(json, function (i, user) {
+						result +=
+							`<div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+								<div class="media-left media-top">
+								   <a href=""><img id="searchUser`+ user.id + `" class="media-object img-sm" `;
+						if (user.profilePicture != null && user.profilePicture != "") {
+							result += `src="../Content/UserContent/UserImages/` + user.profilePicture + `"></a>`
+						} else {
+							result += `src="../Content/Images/man.png"></a>`;
+						}
+						result +=
+								`</div>
+								<div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+								   <h4 class="media-heading head-normalText" style="display: inline;">` + user.username + `</h4>
+								   <button type="button" class="btn-sm messagePanelBtn pull-right btnRemove" disabled id="remove` + user.id + `" style="color: black; border: none;  border-radius: 0px;" onclick="groupUsersChange('remove` + user.id + `', '` + user.username +`');"> Del</button>
+								   <button type="button" class="btn-sm messagePanelBtn pull-right btnAdd" id="add` + user.id + `" style="color: black; border: none; border-radius: 0px;" onclick="groupUsersChange('add` + user.id + `', '` + user.username +`');"><i class="fas fa-plus"></i> Add</button>
+							   </div>
+							 </div> `
+					});
+					document.getElementsByClassName("searchFriendContainer")[0].innerHTML = result;
+				}
+			});
+		}
+
+		if (searchBoxId === 'friends') {
+			var username = document.getElementById("addUsersToFriend").value;
+			var result = "";
+			$.ajax({
+				type: "GET",
+				url: "/Users/Search/",
+				data: { username: username},
+				dataType: "json",
+				success: function (json) {
+					$.each(json, function (i, user) {
+						result +=
+							`<div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+								<div class="media-left media-top">
+								   <a href=""><img id="searchUser` + user.id + `" class="media-object img-sm"`;
+						if (user.profilePicture != null && user.profilePicture != "") {
+							result += `src="../Content/UserContent/UserImages/` + user.profilePicture + `"></a>`;
+						} else {
+							result += `src="../Content/Images/man.png"></a>`;
+						}
+						result +=
+							`</div>
+								<div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+								   <h4 class="media-heading head-normalText" style="display: inline;">` + user.username + `</h4>
+								   <button type="button" class="btn-sm messagePanelBtn pull-right btnAdd" id="addFriend` + user.id + `" style="color: black; border: none; border-radius: 0px;" onclick="addFriend(` + user.id + `)"><i class="fas fa-plus"></i> Add</button>
+							   </div>
+							 </div> `;
+					});
+					document.getElementsByClassName("searchFriendToAddContainer")[0].innerHTML = result;
+				}
+			});
+		}
+	}
+
+	function addFriend(id) {
+		var user = { id: id };
+		$.ajax({
+			type: "POST",
+			url: "/users/friends/add",
+			data: JSON.stringify(user),
+			contentType: "application/json; charset: utf-8",
+			success: function () {
+				refreshFriends();
+			}
+		})
+	}
+
+    function deleteFriend(id) {
+        var user = { id: id };
+        $.ajax({
+            type: "POST",
+            url: "/users/friends/delete",
+            data: JSON.stringify(user),
+            contentType: "application/json; charset: utf-8",
+            success: function () {
+                refreshFriends();
+            }
+        })
+    }
+
+	function validateNewPassword() {
+		var newPassword = document.getElementsByName("newPassword")[0];
+		var confirmPassword = document.getElementsByName("confirmPassword")[0];
+		var confirmMessage = document.getElementById("confirmMessage");
+		if (confirmPassword.value !== newPassword.value) {
+			newPassword.style.border = "1px solid 	#FF2400";
+			confirmPassword.style.border = "1px solid 	#FF2400";
+			confirmMessage.innerHTML = "Passwords don't match";
+			confirmMessage.style.color = "red";
+			confirmMessage.style.fontSize = "10px";
+		} else {
+			newPassword.style.border = "1px solid green";
+			confirmPassword.style.border = "1px solid green";
+			confirmMessage.innerHTML = "";
+		}
+    }
+
+
+	function setGroupHeader(groupId, groupName, isActive) {
+		//populate group info
+		var groupInfo = document.getElementsByClassName("head-container")[0];
+		var gridMessage = document.getElementsByClassName("grid-message")[0].innerHTML = "";
+		var result = "";
+		result +=
+			`<div class="media" style="padding-top: 5px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+				<div class="media-left media-top">
+					<a href="">
+						<img id="group` + groupId + `" class="chatPanelGroupImage media-object img-sm" src="../Content/Images/teamwork.png">`
+		if (isActive == true) {
+			result += `<div id="groupChatActiveState"` + groupId + ` class="dot-green" ></div >
+					</a>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading head-normalText" style="display: inline;">` + groupName + `</h4 >
+					<div class="pull-right" style="display: block; padding-top: 10px">
+                    <!-- three-dots -->
+	                    <button type="button" class="btn dropdown-toggle normalText" style="background: white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <i class="fas fa-ellipsis-v" style="font-size: 20px;"></i> </button>
+	                    <ul class="dropdown-menu pull-left" style="position: relative;">
+	                        <li style = "cursor: pointer" onclick = "leaveGroup(`+ groupId +`)"><a class="normalText">Leave Room</a></li>
+	                        <li style = "cursor: pointer " onclick = "deleteGroup (`+ groupId +`)"><a class="normalText">Delete Room</a></li>
+	                    </ul>					
+                    </div>
+					<p id="groupActiveStateText" class="lightText">is Active</p>
+				</div>
+			</div>`
+		} else {
+			result += `<div id="groupChatActiveState"` + groupId + ` class="dot-red" ></div >
+					</a>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading head-normalText" style="display: inline;">` + groupName + `</h4 >
+					<div class="pull-right" style="display: block; padding-top: 10px">
+                    <!-- three-dots -->
+	                   <button type="button" class="btn dropdown-toggle normalText" style="background: white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <i class="fas fa-ellipsis-v" style="font-size: 20px;"></i> </button>
+	                    <ul class="dropdown-menu pull-left" style="position: relative;">
+	                      <li style = "cursor: pointer" onclick = "leaveGroup(`+ groupId +`)"><a class="normalText">Leave Room</a></li>
+	                      <li style = "cursor: pointer " onclick = "deleteGroup (`+ groupId +`)"><a class="normalText">Delete Room</a></li>
+	                    </ul>					
+                    </div>
+					<p id="groupActiveStateText" class="lightText">is Offline</p>
+				</div>
+			</div>`
+		}
+		groupInfo.innerHTML = result;
+	}
+
+	function populateMessages() {
+		var chatPanelGroupImage = document.getElementsByClassName("chatPanelGroupImage")[0];
+		if (typeof chatPanelGroupImage == 'undefined') {
+			return false;
+		}
+		var gID = chatPanelGroupImage.id.substr(5);
+		var result = "";
+        var gridMessage = document.getElementsByClassName("grid-message")[0];
+        var gridMessageDataCheck = document.getElementsByClassName("grid-message")[1];
+		$.ajax({
+			type: "GET",
+			url: "/users/groups/" + gID + "/messages",
+			dataType: "json",
+			success: function (json) {
+				if (json.success != null && json.success == false && json.detail == 'Not logged in') {
+					window.location.href = "/users/login";
+				} else {
+					$.each(json, function (i, message) {
+						if (message.isReceived == true) {
+							result +=
+								`<div class="col-message-received" style = "margin-top: 20px;">
+                                    <img class="img-circle img-sm pull-left" src="../Content/UserContent/UserImages/`+ message.senderImage +`" style="position: relative;">
+									<div class="message-received tooltipHover" data-toggle="tooltip" data-placement="right" title="` + message.senderName + `, ` + message.createdAt + `">
+										<p style="white-space:pre-line">` + message.messageText + `</p>
+									</div>
+								</div>`
+						} else {
+							result +=
+								`<div class="col-message-sent" style = "margin-top: 20px;">
+                                    <img class="img-circle img-sm pull-right" src="../Content/UserContent/UserImages/`+ message.senderImage +`" style="position: relative;">
+									<div class="message-sent tooltipHover" data-toggle="tooltip" data-placement="left" title="` + message.senderName + `, ` + message.createdAt + `">
+										<p style="white-space:pre-line">` + message.messageText + `</p>
+									</div>
+								</div>`
+						}
+                    })
+                    gridMessageDataCheck.innerHTML = result;
+                    if (gridMessage.innerHTML != gridMessageDataCheck.innerHTML) {
+                        gridMessage.innerHTML = result;
+                        gridMessage.lastElementChild.scrollIntoView();
+                    }
+				}
+			}
+		})
+		return true;
+	}
+
+	function postMessage() {
+		var messageBox = document.getElementById("messageTextContent");
+		if (messageBox.value == "") {
+			return null;
+		}
+		var chatPanelGroupImage = document.getElementsByClassName("chatPanelGroupImage")[0];
+		var gID = chatPanelGroupImage.id.substr(5);
+        var message = { toGroup: gID, messageText: messageBox.value.trim()};
+		$.ajax({
+			type: "POST",
+			url: "/users/groups/messages/add",
+			data: JSON.stringify(message),
+			dataType: "json",
+			contentType: "application/json; charset: utf-8",
+			success: function (response) {
+				if (response.success) {
+					document.getElementById("messageTextContent").value = "";
+				} else {
+					if (response.detail == "Not logged in") {
+						window.location.href = "/users/login";
+					}
+				}
+			}
+		})
+	}
+
+	function refreshLeftPanel() {
+        if (currentPanel == "friends") {
+            refreshFriends();
+        }
+	}
+
+	function friendClick(friendId, friendUsername) {
+		var x = document.getElementsByClassName("addedFriendContainer")[0];
+		document.getElementById("newGroupName").value = friendUsername;
+		var addedItems = `<div id="` + friendId + `"></div>`;
+		x.innerHTML = addedItems;
+		createNewGroup();
+	}
+
+    function searchLeftPanel(type) {
+        if (type == "text") {
+            var searchTerm = document.getElementById("searchLeftPanel").value;
+            var leftContentContainer = document.getElementById("left-content-container");
+            var leftContentSearch = document.getElementById("left-content-search");
+            var searchResults = "";
+            if (searchTerm.trim() != "") {
+                leftContentContainer.classList.add("hide");
+                leftContentSearch.classList.remove("hide");
+                for (var i = 0; i < leftContentContainer.children.length; i++) {
+                    if (leftContentContainer.children[i].children[1].children[0].innerText.toLowerCase().startsWith(searchTerm.toLowerCase())) {
+                        searchResults += leftContentContainer.children[i].outerHTML;
+                    }
+                }
+                leftContentSearch.innerHTML = searchResults;
+            } else {
+                leftContentSearch.classList.add("hide");
+                leftContentContainer.classList.remove("hide");
+            }
+        }
+        if (type == "all") {
+            var leftContentContainer = document.getElementById("left-content-container");
+            var leftContentSearch = document.getElementById("left-content-search");
+            leftContentSearch.classList.add("hide");
+            leftContentContainer.classList.remove("hide");
+        }
+        if (type == "active") {
+            var leftContentContainer = document.getElementById("left-content-container");
+            var leftContentSearch = document.getElementById("left-content-search");
+            leftContentSearch.classList.remove("hide");
+            leftContentContainer.classList.add("hide");
+            var searchResults = "";
+            for (var i = 0; i < leftContentContainer.children.length; i++) {
+                if (leftContentContainer.children[i].children[0].children[1].classList.contains("dot-green")) {
+                    searchResults += leftContentContainer.children[i].outerHTML;
+                }
+            }
+            leftContentSearch.innerHTML = searchResults;
+        }
+    }
+
+    function setActiveMessage(id) {
+        var leftContentContainer = document.getElementById("left-content-container");
+        for (var i = 0; i < leftContentContainer.children.length; i++) {
+            leftContentContainer.children[i].classList.remove("clicked");
+        }
+        document.getElementById(id).classList.add("clicked");
+    }
+
+	function checkSend(e) {
+		if (e.shiftKey && e.key == "Enter") {
+			document.getElementById("chatSendButton").click();
+		}
+	}
+
+	function refreshPage() {
+        populateMessages();
+        if (currentPanel == "messages") {
+            refreshGroups();
+        }
+		getUserState();
+	}
+
+    var refresh = setInterval(refreshPage, 1000);
+
+</script>

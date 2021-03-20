@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChitChatChew Sign-up</title>
+	<script
+	  src="https://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css?family=Caveat:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script&amp;subset=vietnamese" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="template.css">
+</head>
+
+<body background="background.jpg" style="overflow-x: hidden; background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
+	<nav class="navbar navbar-default navbar-color">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" style="border-width: 0px; background-color: #00C4AB;">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" id="active" href="#">
+	      	<img class="brand-img" alt="Brand" src="brand.png">
+	  	  </a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border-width: 0px;">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#"><i class="fas fa-headset"></i>Contact Us <span class="sr-only">(current)</span></a></li>
+	        <li><a href="#"><i class="fas fa-sign-in-alt"></i>Sign in</a></li>    
+	        <li id="active"><a href="#"><i class="fas fa-user-plus"></i>Create an account</a></li>    
+	      </ul> 
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>	
+	<div class="row">
+			<div style="text-align: center;">				
+				<a href="#">
+	      			<img src="brand-color.png" alt="ChitChatChew logo" height="70px" width="100px;" style="margin-left: 10px;">
+	      		</a>
+	    		<h2 style="margin-top: -5px; font-weight: bold"><a href="#" class="yellowText brandText signup-nonhover">ChitChatChew</a></h2>
+	    		
+	    	</div>	    		
+	</div>
+	<!-- Body -->
+	<div class="container-fluid">
+		<!-- middle line -->
+		<div class="row middlebar">
+			<!-- Information -->
+			<div class="col-ms-3 signup-mainbox" >
+				<form>
+					<h1 class="yellowText brandText headerstyle-mainbox">Sign up</h1>
+					<div class="row" style="align-items: center; margin: 25px 0px;">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="firsName">First Name <span style="color: #FFD358">*</span></label>
+						    	<input type="text" placeholder="Ex: Stan" class="form-control" id="firsName" aria-describedby="emailHelp" onfocus="this.placeholder=''" onblur="this.placeholder='Ex: Stan'">	
+							</div>
+
+						    <div class="form-group">
+								<label for="username">Username <span style="color: #FFD358">*</span></label>
+						    	<input type="text" placeholder="Input text" class="form-control" id="usernameInput" aria-describedby="emailHelp" 	onfocus="this.placeholder=''" onblur="this.placeholder='Input text'">					    
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="lastName">Last Name <span style="color: #FFD358">*</span></label>
+						    	<input type="text" placeholder="Ex: Lee" class="form-control" id="lastName" aria-describedby="emailHelp" onfocus="this.placeholder=''" onblur="this.placeholder='Ex: Lee'">	
+							</div>
+
+						    <div class="form-group">
+								<label for="passwordInput">Password <span style="color: #FFD358">*</span></label>
+						    	<input type="password" class="form-control" id="passwordInput" aria-describedby="emailHelp">			<i class="far fa-eye" style="float: right;"></i>		    
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="emailInput">Email <span style="color: #FFD358">*</span></label>
+						    	<input type="text" placeholder="Ex: stanleeXXX@gmail.com" class="form-control" id="emailInput" aria-describedby="emailHelp" onfocus="this.placeholder=''" onblur="this.placeholder='Ex: stanleeXXX@gmail.com'">	
+							</div>
+
+						    <div class="form-group">
+								<label for="confirmedPass">Confirm Password <span style="color: #FFD358">*</span></label>
+						    	<input type="password" class="form-control" id="confirmedPass" aria-describedby="emailHelp">					    
+							</div>
+						</div>
+
+					</div>
+					<div style="text-align: center;">
+						<button type="submit" class="btn btn-lg form-btn" style="margin-bottom: 10px;">Sign Up</button>
+					</div>	
+				</form>					
+				</div>
+				<p style="color: white; margin-top: -15px; margin-bottom: 0px;">Had Account? <a class="yellowText signup-nonhover" href="#" style="text-decoration: none; font-size: 1.5em">Sign in</a></p>			
+		</div>
+	</div>
+	<div class="row signup-connect" style="text-align: center; padding-bottom:10px; margin: 0px;" >
+		<span class="col-md-3"></span>
+		<span class="col-md-3" style="text-align: center;"><p style="margin: 0px;"><a href="#" class="yellowText signup-nonhover">Problem Signing up?</a></p></span>
+		<span class="col-md-3" style="text-align: center;"><p style="margin: 0px;"><a href="#" class="yellowText signup-nonhover">Sign in with</a></p>
+			<ol style="list-style: none; padding-bottom: 20px; padding-right: 0px; padding-left: 0px; margin: 0px;">
+			<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-instagram"></i></a></li>
+			<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-twitter"></i></a></li>
+			<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-facebook-square"></i></a></li>
+			<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-google"></i></a></li>		
+		</ol></span>
+		
+	</div>
+	<!-- footer -->
+	<div class="footer">
+		
+	</div>	
+</body>
+	<!-- footer background -->
+	<footer></footer>		
+</html>

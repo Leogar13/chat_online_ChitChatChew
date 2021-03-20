@@ -1,0 +1,161 @@
+﻿
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ChitChatChew Sign-in</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"
+			integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+			crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css?family=Caveat:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script&amp;subset=vietnamese" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="~/Content/css/template.css">
+</head>
+
+<body style=" background: url(../../Content/Images/background.jpg); overflow-x: hidden; background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
+	<nav class="navbar navbar-default navbar-color">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" style="border-width: 0px; background-color: #00C4AB;">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand active" id="" href="@Url.Action("Index","Home")">
+					<img class="brand-img" alt="Brand" src="~/Content/Icons/brand.png">
+				</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border-width: 0px;">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="@Url.Action("Contact","Home")"><i class="fas fa-headset"></i>Contact Us <span class="sr-only">(current)</span></a></li>
+					<li id="active"><a href="@Url.Action("Login","Users")"><i class="fas fa-sign-in-alt"></i>Sign in</a></li>
+					<li><a href="@Url.Action("Signup","Users")"><i class="fas fa-user-plus"></i>Create an account</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+	<div class="row">
+		<div style="text-align: center;">
+			<a href="@Url.Action("Index","Home")">
+				<img src="~/Content/Icons/brand-color.png" alt="ChitChatChew logo" style="margin-left: 10px; height:70px; width:100px;">
+			</a>
+			<h2 style="margin-top: -5px; font-weight: bold"><a href="#" class="yellowText brandText signup-nonhover">ChitChatChew</a></h2>
+
+		</div>
+	</div>
+	<!-- Body -->
+	<div class="container-fluid">
+		<!-- middle line -->
+		<div class="row middlebar">
+			<div class="col-md-4"></div>
+			<div class="col-md-4 signin-mainbox">
+				<form method="post">
+					<h1 class="yellowText brandText headerstyle-mainbox">Sign in</h1>
+					<div class="form-group">
+						<label for="usernameInput"></label>
+						<input type="text" name="username" placeholder="Enter username" class="form-control" id="usernameInput" onfocus="this.placeholder=''" onblur="this.placeholder='Enter username'">
+					</div>
+					<div class="form-group">
+						<label for="passwordInput">Password</label>
+						<input type="password" name="password" class="form-control" id="passwordInput" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'">
+						<small id="passwordHelp" class="form-text text-left" style="color: white; display: block; margin-top: 5px;">Assistive text.</small>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" name="rememberMeCheck" class="form-check-input" id="rememberMeCheck">
+						<label class="form-check-label yellowText" style="font-size: 1.5em;" for="rememberMeCheck">Stay signed in</label>
+					</div>
+					<div style="text-align: center;">
+						<button type="submit" class="btn btn-lg form-btn" style="margin-bottom: 10px; outline:none;">Submit</button>
+					</div>
+				</form>
+				<a href="@Url.Action("Signup","Users")" id="centerSmall" class="col-md-6 yellowText signup-nonhover" style="font-size: 1.5em">No account? Create one!</a>
+				<a href="#" id="centerSmall" class="col-md-6 yellowText signup-nonhover" style="font-size: 1.5em">Forgot password</a>
+			</div>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<div class="row signup-connect" style="text-align: center; padding-bottom:10px; margin: 0px;">
+		<span class="col-md-3"></span>
+		<span class="col-md-3" style="text-align: center;"><p style="margin: 0px;"><a href="#" class="yellowText signup-nonhover">Problem Signing up?</a></p></span>
+		<span class="col-md-3" style="text-align: center;">
+			<p style="margin: 0px;"><a href="#" class="yellowText signup-nonhover">Sign in with</a></p>
+			<ol style="list-style: none; padding-bottom: 20px; padding-right: 0px; padding-left: 0px; margin: 0px;">
+				<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-instagram"></i></a></li>
+				<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-twitter"></i></a></li>
+				<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-facebook-square"></i></a></li>
+				<li class="col-md-3" style="display: inline-block;"><a href="#" class="signup-listlogo"><i class="fab fa-google"></i></a></li>
+			</ol>
+		</span>
+	</div>
+	<!-- Error Modal-->
+	<div class="modal fade" id="errorModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">@TempData["error"]</h4>
+				</div>
+				<div class="modal-body">
+					<p>"@TempData["errorDetail"]"</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="successModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">@TempData["success"]</h4>
+				</div>
+				<div class="modal-body">
+					<p>"@TempData["successDetail"]"</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- footer -->
+	<div class="footer">
+
+	</div>
+</body>
+<!-- footer background -->
+<footer></footer>
+</html>
+
+<script type="text/javascript">
+	var error = "@TempData["error"]" != "@null";
+	if (error) {
+		document.getElementById("usernameInput").value = '@TempData["username"]';
+		document.getElementById("passwordInput").value = '@TempData["password"]';
+		$('#errorModal').modal("show");
+	}
+	var success = "@TempData["success"]" != "@null";
+	if (success) {
+		$('#successModal').modal("show");
+	}
+</script>
+<script type="text/javascript">
+	var hasCookie = "@TempData["hasCookie"]" != "@null";
+	if (hasCookie) {
+		document.getElementById("usernameInput").value = '@TempData["cookieUsername"]';
+		document.getElementById("passwordInput").value = '@TempData["cookiePassword"]';
+	}
+</script>

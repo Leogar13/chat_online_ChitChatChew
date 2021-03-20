@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ChitChatChew</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Caveat:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script&amp;subset=vietnamese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=vietnamese" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="chat.css">
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+</head>
+<body style="overflow-y: hidden;">
+  <div class="row" style="height: 100%; width: 100%; margin: 0">
+<!-- Message Panel  -->
+    <div class="col-sm-4 col-md-3 messagePanel " style="padding-left: 1px;">
+      <div class="messagePanelPadding" style="overflow-y: hidden; overflow-x: hidden;">
+          <div class="media">
+            <div class="media-left dropdown">
+              <a class="dropdown-toggle" href="#" role ="button" data-toggle = "dropdown" >
+                <img class="media-object img-lg" src="img.png">
+              </a>                
+              <ul class="dropdown-menu">
+                <li class="dropdown-header"></li>
+                <li> <a class="normalText " href="#" >Settings</a></li>
+                <li class="divider"></li>
+                <li> <a class="normalText " href="#" >Switch Account</a></li>
+                <li> <a class="normalText " href="#" >Sign out</a></li>
+              </ul>
+                
+              <div class="big-dot-green"></div>
+            </div>
+
+            <div class="media-body" style="padding-top: 5px">
+              <h3 class="media-heading headerText" style="display: inline-block;">Minh Hiếu Lê</h3>
+              <div class="btn-group" role="group" style="display: block;">
+                <button type="button" class="btn btn-xs dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: rgba(0,0,0,0); color: #5D5D5D; font-size: 14px; padding-left: 1px">
+                Active <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="" class="normalText">Active</a></li>
+                  <li><a href="" class="normalText">Do not disturb</a></li>
+                  <li><a href="" class="normalText">Busy</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Search -->
+          <div class="input-group" style="width: 100%; border: 1px solid #707070">
+              <span class="input-group-addon" id="sizing-addon3"><i class="fas fa-search" style="display: inline;"></i></span>
+              <input type="search" name="site-search" class="searchBox lightText" placeholder="People & groups">
+          </div>
+          <!-- Nav Messenge Panel -->
+          <script type="text/javascript">
+			function showChat() {
+				if (document.getElementById('ChatContainer').style.display ==='none' || document.getElementById('ChatContainer') === 'block' ){
+					document.getElementById('ChatContainer').style.display = 'block';	
+				}
+				else{
+					document.getElementById('ChatContainer').style.display = 'none';
+				}
+			}    
+			function showFriends() {
+				if (document.getElementById('FriendContainer').style.display ==='none'){
+					document.getElementById('FriendContainer').style.display = 'block';	
+				}
+				else{
+					document.getElementById('FriendContainer').style.display = 'none';	
+
+				}
+			}    			      	
+          </script>
+
+          <div class="row" style="padding-top: 5px">
+              <div class="col-xs-4" style="padding-right: 1px;">
+                <button type="button" id="active" id="ChatBtn" class="btn btn-lg messagePanelBtn lightText" style=" width: 100%"><i class="fas fa-comments" style=" font-size: 20px" onclick="showChat()" ></i><br>Chats</button>                
+              </div>
+              <div class="col-xs-4" style="padding-left: 5px; padding-right: 5px;">
+                <button type="button" id="FriendsBtn" class="btn btn-lg messagePanelBtn lightText" style="width: 100%"><i class="fas fa-address-book" style="font-size: 20px" onclick="showFriends()"></i><br>Friends</button>    
+              </div>
+              <div class="col-xs-4" style="padding-left: 1px">
+                <button type="button" class="btn btn-lg messagePanelBtn lightText"  data-toggle="modal" data-target="#ProfileModal" style="width: 100%; padding-left: : 5px; padding-right: 15px; text-align: center "><i class="fas fa-user-friends" style=" font-size: 20px"></i><br>Profile</button>               
+              </div>
+          </div>
+          <div class="modal modal-tall fade" id="ProfileModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+            
+              <div class="modal-content ">
+                <div class ="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title " style="vertical-align: middle;"><center>MY PROFILE</center></h4>
+                </div>
+                <div class="modal-body" style="padding: 0px;">
+                	<div class="ProfileContainer">
+			          <div class="text-center" >
+			               <div class="leftheader " style="font-size: 30px; position: sticky;">
+			                <center>Your Profile</center>
+			              </div>
+			           
+			              <img src="https://images.unsplash.com/photo-1544724107-6d5c4caaff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80" height= "200px" class="avatar" style="border-radius: 5em;" alt="avatar"> 
+			              <div style="position: sticky;">
+			                <label for="file-input">
+			                  <h6 class="edittext" style="cursor: pointer;">Change your profile avatar</h6>  
+			                </label>
+			                <input type="file" id="file-input" style="display: none;">
+			              </div>
+			          </div>
+			            <form class="form-horizontal" role="form" >
+			              <div >
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">First name:</label>
+			                  <div class="col-sm-7" >
+			                    <input class="form-control" style="border-color: #00C4AB" type="text" value="Minh Hieu">
+			                  </div>
+			                </div>
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">Last name:</label>
+			                  <div class="col-sm-7">
+			                    <input class="form-control" style="border-color: #00C4AB" type="text" value="Le">
+			                  </div>
+			                </div>
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">Email:</label>
+			                  <div class="col-sm-7">
+			                    <input class="form-control" style="border-color: #00C4AB" type="text" value="abcabc@gmail.com">
+			                  </div>
+			                </div>
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">Phone:</label>
+			                  <div class="col-sm-7">
+			                    <input class="form-control" style="border-color: #00C4AB" type="tel" value="0123124514">
+			                  </div>
+			                </div>
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">Username:</label>
+			                  <div class="col-sm-7">
+			                    <input class="form-control" style="border-color: #00C4AB" type="text" value="minhhieule">
+			                  </div>
+			                </div>
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">Old Password:</label>
+			                  <div class="col-sm-7">
+			                    <input class="form-control" style="border-color: #00C4AB" type="password" value="11111122333">
+			                  </div>
+			                </div>
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">New Password:</label>
+			                  <div class="col-sm-7">
+			                    <input class="form-control" style="border-color: #00C4AB" type="password" value="11111122333">
+			                  </div>
+			                </div>			                
+			                <div class="form-group">
+			                  <label class="col-sm-3 control-label">Confirm password:</label>
+			                  <div class="col-sm-7">
+			                    <input class="form-control" style="border-color: #00C4AB" type="password" value="11111122333">
+			                  </div>
+			                </div>
+			              </div>
+			            </form>			          
+
+                	</div>
+
+
+                </div>
+
+
+                <div class="modal-footer" style="padding: 5px; padding-top: 10px;">
+                	<form>
+<!-- 	                  <button type="button" class="btn messagePanelBtn pull-right" id = "active" data-dismiss="modal">Done</button>
+ -->		            <input type="button" class="btn btn-primary pull-right" style="background-color: #00C4AB; border-color: #00C4AB" data-dismiss ="modal" value="Save Changes">
+		                <span></span>
+		                <input type="reset" class="btn btn-default pull-right" data-dismiss = "modal" value="Cancel">	                  
+                		
+                	</form>
+
+                </div>
+              </div>
+              
+            </div>
+          </div>   
+
+          <!-- Chat Container -->
+          <div id="ChatContainer" style="display: none;">
+              <div class="btn-group" role="group" style="padding-top: 10px;">
+                <button type="button" class="btn dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: rgba(0,0,0,0); color: #5D5D5D; padding-left: 1px">
+                    RECENT CHATS <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="" class="normalText">Sort by Time</a></li>
+                  <li><a href="" class="normalText">Sort by Unread</a></li>
+
+                </ul>
+              </div>
+              <!-- button Chat -->
+              <div class="pull-right">
+                <button id="active" class=" btn messagePanelBtn dropdown-toggle" type="button" data-toggle="modal" data-target="#RoomChatModal" style="margin-top: 5px;margin-bottom: 1px; width: 90px;"><i class="fas fa-plus"></i>  Chat</button>
+                </div>	
+              <!-- Group Chat Modal                     -->
+              <div class="modal modal-tall fade" id="RoomChatModal" role="dialog">
+                <div class="modal-dialog">
+                
+                  <!-- Modal content-->
+                  <div class="modal-content modal-tall">
+                    <div class ="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title " style="vertical-align: middle;"><center>NEW ROOM CHAT</center></h4>
+                    </div>
+                    <div class="modal-body" style="padding: 0px;">
+                      <div class="insertGroupName">
+                        <center><input type="text" placeholder="Room name" style="text-align: center; padding-top: 15px; padding-right: 0px;"></center>
+                      </div>
+                      <form>
+                        <div class="input-group" style="width: 100%; border: none; padding-bottom: 5px; padding-top: 15px">
+                            <span class="input-group-addon" id="sizing-addon4"><i class="fas fa-search" style="display: inline; "></i></span>
+                            <center>
+                              <input type="search" name="site-search" class="searchName lightText" placeholder="Add to Group" style="border: none;">                        
+                            </center>
+                        </div>                    
+                      </form>
+
+                      <div class="searchFriendContainer">
+                        <div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+                          <div class="media-left media-top">
+                            <a href="">
+                              <img class="media-object img-sm" src="img.png">
+                            </a>
+                          </div>
+                          <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+                            <h4 class="media-heading head-normalText" style="display: inline;" >Minh Hiếu Lê</h4>
+                            <button type="button" class="btn-sm messagePanelBtn pull-right"id="add" style="color: black; border: none;" ><i class="fas fa-plus" onclick="disableBtn()"></i> Add</button>
+                            <button type="button" class="btn-sm messagePanelBtn pull-right" id="delete" style="color: black; border: none; display: none;"> Del</button>
+                         </div>
+                        </div>
+                        <div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+                          <div class="media-left media-top">
+                            <a href="">
+                              <img class="media-object img-sm" src="img.png">
+                            </a>
+                          </div>
+                          <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+                            <h4 class="media-heading head-normalText" style="display: inline;" >Minh Hiếu Lê</h4>
+                            <button type="button" class="btn-sm messagePanelBtn pull-right"id="add" style="color: black; border: none;"><i class="fas fa-plus"></i> Add</button>
+                            <button type="button" class="btn-sm messagePanelBtn pull-right" id="delete" style="color: black; border: none; display: none;"> Del</button>
+                         </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <div class="modal-footer" style="padding: 5px; padding-top: 10px;">
+                      <div class="addedFriendContainer">
+                        
+                      </div>
+                      <button type="button" class="btn messagePanelBtn pull-right" id = "active" data-dismiss="modal">Done</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>   
+
+
+              <div class="List-container" style="border: 1px solid rgba(0,0,0,0.2); overflow-y: auto; margin-left: 3px; margin-top:  15px">
+
+                <!-- Use firstchat for first user   -->
+
+
+                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+                  <div class="media-left media-top">
+                    <a href="">
+                      <img class="media-object img-sm" src="img.png">
+
+                      <div class="dot-green"></div>
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading head-normalText" style="display: inline;">Minh Hiếu Lê</h4>
+                    <small class="pull-right" style="display: block; margin-right: 5% ;">21:20</small>
+                    <p class="lightText">hello</p>
+                  </div>
+                </div>
+
+                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+                  <div class="media-left media-top">
+                    <a href="">
+                      <img class="media-object img-sm" src="img.png">
+                      <div class="dot-green"></div>
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading head-normalText" style="display: inline;">Minh Hiếu Lê</h4>
+                    <small class="pull-right" style="display: block; margin-right: 5% ;">21:20</small>
+                    <p class="lightText">hello</p>
+                  </div>
+                </div>
+
+                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+                  <div class="media-left media-top">
+                    <a href="">
+                      <img class="media-object img-sm" src="img.png">
+                      <div class="dot-green"></div>
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading head-normalText" style="display: inline;">Minh Hiếu Lê</h4>
+                    <small class="pull-right" style="display: block; margin-right: 5% ;">21:20</small>
+                    <p class="lightText">hello</p>
+                  </div>
+                </div>
+                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+                  <div class="media-left media-top">
+                    <a href="">
+                      <img class="media-object img-sm" src="img.png">
+                      <div class="dot-green"></div>
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading head-normalText" style="display: inline;">Minh Hiếu Lê</h4>
+                    <small class="pull-right" style="display: block; margin-right: 5% ;">21:20</small>
+                    <p class="lightText">hello</p>
+                  </div>
+                </div>
+
+                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+                  <div class="media-left media-top">
+                    <a href="">
+                      <img class="media-object img-sm" src="img.png">
+                      <div class="dot-green"></div>
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading head-normalText" style="display: inline;">Minh Hiếu Lê</h4>
+                    <small class="pull-right" style="display: block; margin-right: 5% ;">21:20</small>
+                    <p class="lightText">hello</p>
+                  </div>
+                </div>
+              </div>
+          </div>  
+
+          <!-- FriendContainer -->
+          <div id="FriendContainer"  >
+          		<!-- View Friends -->
+		      <div class="btn-group" role="group" style="padding-top: 10px;">
+		        <button type="button" class="btn dropdown-toggle normalText" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: rgba(0,0,0,0); color: #5D5D5D; padding-left: 1px">
+		            MY FRIENDS <span class="caret"></span></button>
+		        <ul class="dropdown-menu">
+		          <li><a href="" class="normalText">View my Friends</a></li>
+		          <li><a href="" class="normalText">View all active Friends</a></li>
+		        </ul>
+		      </div>
+		      <!-- Add Friend -->
+		      <div class="pull-right">
+		        <button id="active" class=" btn messagePanelBtn dropdown-toggle" type="button" data-toggle="modal" data-target="#AddFriendModal" style="margin-top: 5px;margin-bottom: 1px; width: 90px;"><i class="fas fa-plus"></i>  Friend</button>
+		      </div>
+
+		      <!-- Add Friend Modal -->
+
+              <div class="modal modal-tall fade" id="AddFriendModal" role="dialog">
+                <div class="modal-dialog">
+                
+                  <!-- Modal content-->
+                  <div class="modal-content modal-tall">
+                    <div class ="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title " style="vertical-align: middle;"><center>ADD NEW FRIEND</center></h4>
+                    </div>
+                    <div class="modal-body" style="padding: 0px;">
+                      <form>
+                        <div class="input-group" style="width: 100%; border: none; padding-bottom: 5px; padding-top: 15px">
+                            <span class="input-group-addon" id="sizing-addon4"><i class="fas fa-search" style="display: inline; "></i></span>
+                            <center>
+                              <input type="search" name="site-search" class="searchName lightText" placeholder="Find Friend" style="border: none;">                        
+                            </center>
+                        </div>                    
+                      </form>
+                      <center>
+                      	Search for people using their username, email or full name.
+                      </center>
+
+                      <div class="searchFriendContainer">
+                        <div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+                          <div class="media-left media-top">
+                            <a href="">
+                              <img class="media-object img-sm" src="img.png">
+                            </a>
+                          </div>
+                          <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+                            <h4 class="media-heading head-normalText" style="display: inline;" >Minh Hiếu Lê</h4>
+                            <button type="button" class="btn-sm messagePanelBtn pull-right"id="add" style="color: black; border: none;" ><i class="fas fa-plus" onclick="disableBtn()"></i> Add</button>
+                         </div>
+                        </div>
+                        <div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+                          <div class="media-left media-top">
+                            <a href="">
+                              <img class="media-object img-sm" src="img.png">
+                            </a>
+                          </div>
+                          <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+                            <h4 class="media-heading head-normalText" style="display: inline;" >Minh Hiếu Lê</h4>
+                            <button type="button" class="btn-sm messagePanelBtn pull-right"id="add" style="color: black; border: none;"><i class="fas fa-plus"></i> Add</button>
+                         </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <div class="modal-footer" style="padding: 5px; padding-top: 10px;">
+                      <div class="addedFriendContainer">
+                        
+                      </div>
+                      <button type="button" class="btn messagePanelBtn pull-right" id = "active" data-dismiss="modal">Done</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>   		                	
+		      <div class="List-container" style="border: 1px solid rgba(0,0,0,0.2); overflow-y: auto; margin-left: 3px; margin-top:  15px">
+			      <!-- Group by A -->
+				<div class="letterContainer">
+					<h4 style="padding-left: 10px;">A</h4>
+									<!-- each Friend -->
+	                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+	                  <div class="media-left media-top">
+	                    <a href="">
+	                      <img class="media-object img-sm" src="img.png">
+	                      <div class="dot-green"></div>
+	                    </a>
+	                  </div>
+	                  <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+	                    <h4 class="media-heading head-normalText" style="display: inline;">An Nguyen</h4>
+	                  </div>
+	                </div>	
+	                				<!-- each Friend -->
+	                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+	                  <div class="media-left media-top">
+	                    <a href="">
+	                      <img class="media-object img-sm" src="img.png">
+	                      <div class="dot-green"></div>
+	                    </a>
+	                  </div>
+	                  <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+	                    <h4 class="media-heading head-normalText" style="display: inline;">An Tran</h4>
+	                  </div>
+	                </div>	
+
+				</div>
+				<!-- Group by B -->
+	          	<div class="letterContainer">
+					<h4 style="padding-left: 10px;">B</h4>
+									<!-- each Friend -->
+	                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+	                  <div class="media-left media-top">
+	                    <a href="">
+	                      <img class="media-object img-sm" src="img.png">
+	                      <div class="dot-green"></div>
+	                    </a>
+	                  </div>
+	                  <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+	                    <h4 class="media-heading head-normalText" style="display: inline;">Bao Tran</h4>
+	                  </div>
+	                </div>	
+	                				<!-- each Friend -->
+	                <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+	                  <div class="media-left media-top">
+	                    <a href="">
+	                      <img class="media-object img-sm" src="img.png">
+	                      <div class="dot-green"></div>
+	                    </a>
+	                  </div>
+	                  <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+	                    <h4 class="media-heading head-normalText" style="display: inline;">Binh Le</h4>
+	                  </div>
+	                </div>	
+
+				</div>
+		      	
+		      </div>
+
+          	
+          </div>    
+        </div>
+            
+    </div>
+
+    <!-- Chat Panel -->
+    <div class="col-sm-8 col-md-7 chatPanel" >
+        <div class="head-container" style="position: relative;">
+          <div class="media" style="padding-top: 5px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+            <div class="media-left media-top">
+              <a href="">
+                <img class="media-object img-sm" src="img.png">
+                <div class="dot-green"></div>
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading head-normalText" style="display: inline;">Minh Hiếu Lê</h4>
+              <div class="pull-right" style="display: block ;">
+                <!-- three-dots -->
+	               <button type="button" class="btn dropdown-toggle normalText" style="background: white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <i class="fas fa-ellipsis-v" style="font-size: 20px;"></i> </button>
+	                <ul class="dropdown-menu pull-left" style="position: relative;">
+	                  <li><a href="" class="normalText">Block</a></li>
+	                  <li><a href="" class="normalText">Delete Conversation</a></li>
+	                  <li><a href="" class="normalText">Turn off Notification</a></li>
+	                </ul>
+                	
+
+                
+              </div>
+              <p class="lightText">is Active</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="mainchat-container">
+              <section class="message">
+                <div >
+                    <div class="col-message-received">
+                        <div class="message-received">
+                            <p>Ok.</p>
+                        </div>
+                        <div class="message-received">
+                            <p>Do you play EVE Online?</p>
+                        </div>
+                    </div>
+                    <div class="col-message-sent">
+                        <div class="message-sent">
+                            <p>Not anymore.</p>
+                        </div>
+                    </div>
+                    <div class="col-message-received">
+                        <div class="message-received">
+
+                            <p>But, can you?</p>
+                        </div>
+                    </div>
+                    <div class="col-message-sent">
+                        <div class="message-sent">
+                            <p>I guess if I had some practice I could again. It's been years.</p>
+                        </div>
+                    </div>
+                    <div class="col-message-received">
+                        <div class="message-received">
+                            <p>Dat titan though...</p>
+                        </div>
+                    </div>
+                    <div class="col-message-sent">
+                        <div class="message-sent">
+                            <p>Trombone, guitar, titan?</p>
+                        </div>
+                    </div>
+                    <div class="col-message-received">
+                        <div class="message-received">
+                            <p>Niiiiice.</p>
+                        </div>
+                    </div>
+                    <div class="col-message-sent">
+                        <div class="message-sent">
+                            <div class="">
+                                <p>Do you care if I use the last few minutes of our conversation as dummy text for this thing I'm coding?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-message-received">
+                        <div class="message-received">
+                            <p>Sure go ahead.</p>
+                        </div>
+                    </div>
+                    <div class="col-message-sent">
+                        <div class="message-sent">
+                            <p>Okay.</p>
+                        </div>
+                        <div class="message-sent">
+                            <p>I'll send you some ISK when I'm done.</p>
+                        </div>
+                        <div class="message-sent">
+                            <p>It's cool.</p>
+                        </div>
+                    </div>
+                    <div class="col-message-received">
+                        <div class="message-received">
+                            <p>Ok.</p>
+                        </div>
+                        <div class="message-received">
+                            <p>Do you play EVE Online?</p>
+                        </div>
+                    </div>
+                    <div class="col-message-sent">
+                        <div class="message-sent">
+                            <p>Not anymore.</p>
+                        </div>
+                    </div>
+                    <div class="col-message-received">
+                        <div class="message-received">
+                            <p>But, can you?</p>
+                        </div>
+                    </div>
+                    <div class="col-message-sent">
+                        <div class="message-sent">
+                            <p>I guess if I had some practice I could again. It's been years.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+          
+        </div>        
+        <div class="chatbox-container" style="padding-top: 5px;">
+          <div class="compose">
+
+              <input placeholder="Type a message">
+              <div class="compose-dock">
+                  <div class="dock">
+                    <i class="fas fa-microphone" style="font-size: 30px"></i>
+                  </div>
+              </div>
+
+          </div>          
+        </div>
+    </div>
+
+        
+
+
+    <!-- Tool Panel -->
+    <div class="hidden-sm col-md-2 toolPanel">
+    	<div id="ProfileInfoContainer" style="display: none;"">
+	       <div class="leftheader">
+	        <center>          Profile        </center>
+	      </div>
+	      <div class="ItemContainer">
+	      	<div class="text-center">
+              <form>
+                <div class="input-group" style="width: 100%; border: none; padding-bottom: 5px; padding-top: 15px; padding-bottom: 20px;">
+                    <span class="input-group-addon" id="sizing-addon4"><i class="fas fa-pen" style="display: inline; opacity: 0.5; "></i></span>
+                    <center>
+                      <input type="text"class="searchName headerText" id="groupname" value="Group Name" style="border: none;">                        
+                    </center>
+                </div>                    
+              </form>	      		
+	      	</div>
+  
+	      	<!-- MEMBER 1 -->
+            <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+              <div class="media-left media-top">
+                <a role = "button" data-container="body" data-html = "true" href="#" id="member1" data-toggle="popover" title="Minh Hiếu Lê" data-placement="left" >
+                  <img class="media-object img-sm" src="img.png">
+                  <div class="dot-green"></div>
+                </a>
+              </div>
+
+
+				           
+              <div class="media-body" style="padding-top: 10px;">
+                <h4 class="media-heading head-normalText" style="display: inline;">Minh Hiếu Lê</h4>
+              </div>
+            </div>	      	
+		      <div class="infocontainer hide" id = "popup-content-member1"  >
+	      	
+		        <ul style="list-style-type: none; padding-left: 0; height: 100px; width: auto;  ">
+		          <li class="titleText" style="padding-top: 10px;">AccountID: hieule</li>
+		          <li class="titleText" style="padding-top: 10px;">Email: </li>
+		          <li class="titleText" style="padding-top: 10px;">Phone: </li>
+		        </ul>          
+		      </div>
+
+		      <!-- MEMBER2 -->
+            <div class="media" style="padding-top: 1px; padding-left: 10px; padding-right: 10px; margin-top: 1px">
+              <div class="media-left media-top">
+                <a role = "button" data-container="body" data-html = "true" href="#" id="member2" data-toggle="popover" title="Hưng Hoàng" data-placement="left" >
+                  <img class="media-object img-sm" src="img.png">
+                  <div class="dot-green"></div>
+                </a>
+              </div>
+
+
+				           
+              <div class="media-body" style="padding-top: 10px;">
+                <h4 class="media-heading head-normalText" style="display: inline;">Hưng Hoàng</h4>
+              </div>
+            </div>	      	
+		      <div class="infocontainer hide" id = "popup-content-member2"  >
+	      	
+		        <ul style="list-style-type: none; padding-left: 0; height: 100px; width: auto;  ">
+		          <li class="titleText" style="padding-top: 10px;">AccountID: hunghoang</li>
+		          <li class="titleText" style="padding-top: 10px;">Email: </li>
+		          <li class="titleText" style="padding-top: 10px;">Phone: </li>
+		        </ul>          
+		      </div>
+
+
+
+		     <div class="text-center" >
+	   		     <button id="active" class=" btn messagePanelBtn" data-toggle ="modal" data-target ="#AddNewMember" type="button" style="margin-top: 5px;margin-bottom: 1px; width: 90px;"><i class="fas fa-plus"></i>  Member</button>    
+
+	    	</div>
+          <!-- Add New Member Modal                     -->
+          <div class="modal modal-tall fade" id="AddNewMember" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content modal-tall">
+                <div class ="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title " style="vertical-align: middle;"><center>ADD MEMBER</center></h4>
+                </div>
+                <div class="modal-body" style="padding: 0px;">
+                  <form>
+                    <div class="input-group" style="width: 100%; border: none; padding-bottom: 5px; padding-top: 15px">
+                        <span class="input-group-addon" id="sizing-addon4"><i class="fas fa-search" style="display: inline; "></i></span>
+                        <center>
+                          <input type="search" name="site-search" class="searchName lightText" placeholder="Add to Group" style="border: none;">                        
+                        </center>
+                    </div>                    
+                  </form>
+
+                  <div class="searchFriendContainer">
+                    <div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+                      <div class="media-left media-top">
+                        <a href="">
+                          <img class="media-object img-sm" src="img.png">
+                        </a>
+                      </div>
+                      <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+                        <h4 class="media-heading head-normalText" style="display: inline;" >Minh Hiếu Lê</h4>
+                        <button type="button" class="btn-sm messagePanelBtn pull-right"id="add" style="color: black; border: none;" ><i class="fas fa-plus" onclick="disableBtn()"></i> Add</button>
+                        <button type="button" class="btn-sm messagePanelBtn pull-right" id="delete" style="color: black; border: none; display: none;"> Del</button>
+                     </div>
+                    </div>
+                    <div class="media" style="padding-top: 1px; padding-left:  20px; padding-right: 5px; margin-top: 10px;">
+                      <div class="media-left media-top">
+                        <a href="">
+                          <img class="media-object img-sm" src="img.png">
+                        </a>
+                      </div>
+                      <div class="media-body" style="padding-top: 5px; padding-right: 10px;">
+                        <h4 class="media-heading head-normalText" style="display: inline;" >Minh Hiếu Lê</h4>
+                        <button type="button" class="btn-sm messagePanelBtn pull-right"id="add" style="color: black; border: none;"><i class="fas fa-plus"></i> Add</button>
+                        <button type="button" class="btn-sm messagePanelBtn pull-right" id="delete" style="color: black; border: none; display: none;"> Del</button>
+                     </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <div class="modal-footer" style="padding: 5px; padding-top: 10px;">
+                  <div class="addedFriendContainer">
+                    
+                  </div>
+                  <button type="button" class="btn messagePanelBtn pull-right" id = "active" data-dismiss="modal">Done</button>
+                </div>
+              </div>
+              
+            </div>
+          </div> 	    	  		  		      		      	      	
+	      </div>
+
+
+<!-- 	      	JS for calling a member have an id = "member" -->
+				<script>
+				$("[data-toggle=popover]").each(function(i, obj) {
+
+				$(this).popover({
+				  html: true,
+				  content: function() {
+				    var id = $(this).attr('id')
+				    return $('#popup-content-' + id).html();
+				  }
+				});
+
+				});
+				</script> 	      
+
+
+
+	      <!-- Diplay info each username like this -->
+
+
+
+    		
+    	</div>
+
+    	<!-- Edit here ImageContainer -->
+    	<div id="ImageContainer" style="display: none;" >
+	       <div class="leftheader">
+	        <center>          Images        </center>
+    		</div>
+	        <div class="ItemContainer" style="padding-top: 10px;">
+	        	<!-- demo two images in row -->
+				<div class="row center" style="position: relative; margin: 0px;">
+				  <div class="col-md-6 thumbnail image">
+				  		<img src="https://images.unsplash.com/photo-1544724107-6d5c4caaff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80" style="padding: 2px;" >	
+				  </div>
+				  <div class="col-md-6 thumbnail image" ">
+				  	<img src="https://images.unsplash.com/photo-1544724107-6d5c4caaff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80" style="padding: 2px;" >
+				  </div>
+				</div>
+				<!-- demo one image in row -->
+				<div class="row center" style="position: relative; margin: 0px;">
+				  <div class="col-md-6 thumbnail image">
+				  		<img src="https://images.unsplash.com/photo-1544724107-6d5c4caaff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80" style="padding: 2px;" >	
+				  </div>
+				  <div class="col-md-6 thumbnail image" ">
+				  	<img src="" style="padding: 2px;" >
+				  </div>
+				</div>							        		
+	        </div>
+	    	<div class="text-center" >
+	   		     <button id="active" class=" btn messagePanelBtn dropdown-toggle" type="button" style="margin-top: 5px;margin-bottom: 1px; width: 90px;"><i class="fas fa-plus"></i>  Image</button>    		
+	    	</div>  	        
+    	</div>
+
+
+    	<!-- Edit here StickerContainer -->
+    	<div id="StickerContainer" >
+	       <div class="leftheader">
+	        <center>          Stickers        </center>
+    		</div>
+        	<div class="row tab" style="position: relative; padding-left: 10px; padding-right: 15px;" >
+
+	          <div class="col-xs-2 " style="padding-right: 1px;padding-left: 1px">
+	            <button type="button" class="squarebut tablinks" style="padding: 1px;" onclick="openTab(event, 'Emo1')">
+	              <i class="far fa-grin-squint-tears" style="font-size: 20px;" ></i>              
+	            </button>
+	          </div>
+	          <div class="col-xs-2 " style="padding-right: 1px;padding-left: 1px">
+	            <button type="button" class="squarebut tablinks" style="padding: 1px;" onclick="openTab(event, 'Emo2')">
+	              <i class="far fa-grin-squint-tears" style="font-size: 20px;" ></i>              
+	            </button>
+	          </div>
+	          <div class="col-xs-2" style="padding-right: 1px;padding-left: 1px">
+	            <button type="button" class="squarebut tablinks" style="padding: 1px;" onclick="openTab(event, 'Emo3')">
+	              <i class="far fa-grin-squint-tears" style="font-size: 20px;" ></i>              
+	            </button>
+	          </div>
+	          <div class="col-xs-2" style="padding-right: 1px;padding-left: 1px">
+	            <button type="button" class="squarebut tablinks" style="padding: 1px;" onclick="openTab(event, 'Emo4')">
+	              <i class="far fa-grin-squint-tears" style="font-size: 20px;" ></i>              
+	            </button>
+	          </div>
+	          <div class="col-xs-2" style="padding-right: 1px;padding-left: 1px">
+	            <button type="button" class="squarebut tablinks" style="padding: 1px;" onclick="openTab(event, 'Emo5')">
+	              <i class="far fa-grin-squint-tears" style="font-size: 20px;" ></i>              
+	            </button>
+	          </div>
+	          <div class="col-xs-2" style="padding-right: 1px;padding-left: 1px">
+	            <button type="button" class="squarebut tablinks" style="padding: 1px;" onclick="openTab(event, 'Emo6')">
+	              <i class="far fa-grin-squint-tears" style="font-size: 20px;" ></i>              
+	            </button>
+	          </div>
+
+        	</div>    		
+	        <div class="ItemContainer" style="padding-top: 10px;">
+
+
+
+<!-- 
+				<div class="tab">
+				  <button class="tablinks" onclick="openTab(event, 'London')">Food</button>
+				  <button class="tablinks" onclick="openCity(event, 'Paris')">Sports</button>
+				  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Emo</button>
+				</div> -->
+
+				<div id="Emo1" class="tabcontent">
+
+					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  				  
+				  					<!-- 4 emos in row -->
+					<dir class="row" style="padding: 1px; padding-left: 8px; position: relative;">
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-image" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="far fa-grin-squint-tears" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-paperclip" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+			          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+			            <button type="button" class="squarebut">
+			              <i class="fas fa-user-circle" style="font-size: 22px;" ></i>              
+			            </button>
+			          </div>
+									
+					</dir>
+				  
+
+
+
+				</div>
+
+				<div id="Emo2" class="tabcontent">
+				   <p>emo2</p>
+				</div>
+
+				<div id="Emo3" class="tabcontent">
+				   <p>Emo3</p>
+				</div>
+
+				<div id="Emo4" class="tabcontent">
+				   <p>Emo4</p>
+				</div>
+
+				<div id="Emo5" class="tabcontent">
+				   <p>Emo5</p>
+				</div>
+
+				<div id="Emo6" class="tabcontent">
+				   <p>Emo6</p>
+				</div>
+
+
+				<script>
+				function openTab(evt, tabName) {
+				  var i, tabcontent, tablinks;
+				  tabcontent = document.getElementsByClassName("tabcontent");
+				  for (i = 0; i < tabcontent.length; i++) {
+				    tabcontent[i].style.display = "none";
+				  }
+				  tablinks = document.getElementsByClassName("tablinks");
+				  for (i = 0; i < tablinks.length; i++) {
+				    tablinks[i].className = tablinks[i].className.replace(" active", "");
+				  }
+				  document.getElementById(tabName).style.display = "block";
+				  evt.currentTarget.className += " active";
+				}
+				</script>
+
+
+
+											        		
+	        </div>
+	        
+    	</div>  
+    	<!-- Edit here AttachmentContainer -->
+    	<div id="AttachmentContainer" style="display: none;">
+	       <div class="leftheader">
+	        <center>          Attachments        </center>
+    		</div>
+	        <div class="ItemContainer" style="padding-top: 10px;">
+	        	<!-- demo two images in row -->
+				<div class="row center" style="position: relative; margin: 0px;">
+				  <div class="col-md-6 thumbnail image">
+				  		<img src="https://images.unsplash.com/photo-1544724107-6d5c4caaff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80" style="padding: 2px;" >	
+				  </div>
+				  <div class="col-md-6 thumbnail image" ">
+				  	<img src="https://images.unsplash.com/photo-1544724107-6d5c4caaff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80" style="padding: 2px;" >
+				  </div>
+				</div>
+				<!-- demo one image in row -->
+				<div class="row center" style="position: relative; margin: 0px;">
+				  <div class="col-md-6 thumbnail image">
+				  		<img src="https://images.unsplash.com/photo-1544724107-6d5c4caaff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80" style="padding: 2px;" >	
+				  </div>
+				  <div class="col-md-6 thumbnail image" ">
+				  	<img src="" style="padding: 2px;" >
+				  </div>
+				</div>							        		
+	        </div>
+	    	<div class="text-center" >
+	   		     <button id="active" class=" btn messagePanelBtn dropdown-toggle" type="button" style="margin-top: 5px;margin-bottom: 1px; width: 90px;"><i class="fas fa-plus"></i>  Attachment</button>    		
+	    	</div>  	        
+    	</div>   
+
+      <div class="toolContainer" style="padding-top: 15px;">
+        <div class="row" >
+          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+            <button type="button" class="squarebut">
+              <i class="fas fa-image" style="font-size: 24px;" ></i>              
+            </button>
+          </div>
+          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+            <button type="button" class="squarebut">
+              <i class="far fa-grin-squint-tears" style="font-size: 24px;" ></i>              
+            </button>
+          </div>
+          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+            <button type="button" class="squarebut">
+              <i class="fas fa-paperclip" style="font-size: 24px;" ></i>              
+            </button>
+          </div>
+          <div class="col-xs-3" style="padding-right: 1px;padding-left: 1px">
+            <button type="button" id="active" class="squarebut">
+              <i class="fas fa-user-circle" style="font-size: 24px;" ></i>              
+            </button>
+          </div>
+        </div>
+        
+      </div>
+
+
+
+  </div>
+
+</body>
+</html>
+

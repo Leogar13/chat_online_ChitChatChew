@@ -1,0 +1,746 @@
+body,html{
+  height: 100%;
+  box-sizing: border-box;
+}
+
+
+#active{
+	background-color: #52E0D2;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+#add{
+  background-color: #52E0D2;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+#delete{
+  background-color: #E9E9E9;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.chatPanel{
+  padding-right: 1px;
+  padding-left: 1px;
+	height: 100%;
+}
+.messagePanel{
+  height: 100%;
+  background-color: #00C4AB;
+  padding-left: 15px;
+  padding-right: 1px;
+}
+.toolPanel{
+  border-left: 1px solid rgba(0,0,0,0.2);
+  background-color: #FFFFFF;
+  padding-right: 1px;
+  padding-left: 1px;
+  height: 100%;
+}
+.messagePanelPadding{
+	padding-left: 10px;
+	padding-top: 10px;
+  padding-right: 10px;
+  height: 100%;
+}
+.headerText{
+	font-family: "Roboto", sans-serif;
+	font-weight: 600;
+  font-size: 20px
+}
+.normalText{
+	font-family: "Roboto", sans-serif;
+	font-weight: 400;
+  font-size: 14px
+}
+.head-normalText{
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px
+}
+.lightText{
+	font-family: "Roboto", sans-serif;
+	font-weight: 300;
+  font-size: 14px
+}
+.messagePanelBtn{
+	background-color: rgba(0,0,0,0);
+	transition: all 0.4s;
+}
+#active:hover, .messagePanelBtn:hover{
+	background-color: #A8FFFB;
+}
+
+.searchBox{
+	width: 100%;
+	padding-bottom: 5px;
+	padding-top: 6px;
+}
+#sizing-addon3, .searchBox{
+	border: none;
+	background-color: #A8FFFB;
+}
+
+.media-object{
+	border-radius: 50%;
+}
+.img-lg{
+	height: 48px;
+	width: 48px;
+}
+.img-sm{
+	height: 36px;
+	width: 36px;
+}
+.media-body,
+.media {
+    overflow: visible;
+}
+
+.media-body:after,
+.media:after {
+    clear: both;
+    content: ' ';
+    display: block;
+    height: 0;
+}
+
+button:focus {
+	outline: none !important;
+	box-shadow: none !important;
+
+}
+
+.status{
+	vertical-align:middle;
+  margin-left:-15px;
+  margin-top: -20px;
+  font-size:13px;
+}  
+  
+.List-container{
+	height: 420px;
+	position: relative;
+  padding-top: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+div.mainchat-container{
+  height: 80%;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1px;
+}
+div.head-container {
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  height: 8%;
+  top: 0;
+  position: sticky;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+div.chatbox-container{
+  border-top: 1px solid rgba(0,0,0,0.2);
+  height: 12%;
+  position: sticky;
+  padding-left: 20px;
+  padding-right: 20px;
+  bottom: 0;
+}
+
+.big-dot-green {
+  height: 15px;
+  width: 15px;
+  position: relative;
+  bottom: 15px;
+  left: 75%;
+  background-color: #44FF8F;
+  border-radius: 50%;
+  display: inline-block;
+}
+.big-dot-yellow {
+  height: 15px;
+  width: 15px;
+  position: relative;
+  bottom: 15px;
+  left: 75%;
+  background-color: #FFD358;
+  border-radius: 50%;
+  display: inline-block;
+}
+.big-dot-red {
+  height: 15px;
+  width: 15px;
+  position: relative;
+  bottom: 15px;
+  left: 75%;
+  background-color: #FF3D3D;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-green {
+  height: 10px;
+  width: 10px;
+  position: relative;
+  bottom: 15px;
+  left: 75%;
+  background-color: #44FF8F;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-red {
+  height: 10px;
+  width: 10px;
+  position: relative;
+  bottom: 15px;
+  left: 75%;
+  background-color: #FF3D3D;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-yellow {
+  height: 10px;
+  width: 10px;
+  position: relative;
+  bottom: 15px;
+  left: 75%;
+  background-color: #FFD358;
+  border-radius: 50%;
+  display: inline-block;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
+
+.firstchat{
+  padding-top: 10px; padding-left: 10px; padding-right: 10px;
+}
+.col-left {
+  background-color:  yellow;
+  border-right: yellow;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 300px;
+  flex: 0 0 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+main {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.message {
+  min-height: 53.33203125em;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 20px;
+}
+
+
+.message-sent, .message-received {
+  clear: both;
+  position: relative;
+}
+
+.message-sent::before, .message-received::before, .message-sent::after, .message-received::after {
+  content: '';
+  display: table;
+}
+
+
+.col-message-sent {
+  margin-left: calc(40% + 0.08333333em) !important;
+}
+
+.col-message-received {
+  margin-right: calc(40% + 0.08333333em) !important;
+}
+
+.col-message-sent, .col-message-received {
+  width: calc(60% - 0.08235677em);
+}
+
+.message-sent, .message-received {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  padding: 0.5em 0.6em;
+}
+
+.message-sent p, .message-received p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.message-sent {
+  float: right;
+  color: black;
+  background-color: #3FE2D3;
+  border-radius: 0.5em 0.25em 0.25em 0.5em;
+}
+
+.message-received {
+  float: left;
+  color: black;
+  background-color: #E9E9E9;
+  border-radius: 0.25em 0.5em 0.5em 0.25em;
+}
+
+.col-message-sent, .col-message-received {
+  margin-top: 0.25em !important;
+}
+
+.compose {
+  width: 94%;
+  height: 90%;
+  padding: 20px;
+  vertical-align: middle;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 0.5em;
+}
+.compose input {
+  width: 100%;
+  border: 0px;
+  font-size: 17px;
+  padding-right: 80px;
+}
+.compose .compose-dock .dock {
+  position: absolute;
+  top: 30%;
+  right: 3%;
+}
+.compose .compose-dock i {
+  opacity: 0.8;
+}
+.compose .compose-dock i:hover {
+  opacity: 1;
+}
+
+.leftheader{
+  font-family: 'Caveat';
+  color: #FFD358;
+  font-size: 24px;
+  font-weight: 600;
+  padding-top: 10px;
+}
+.avatarcontainer{
+  position: relative;
+  height: 200px;
+  width: 96%;
+  border: 1.5px solid rgba(0,0,0,0.2);
+  border-radius: 5em;
+}
+.useravatarcontainer{
+  position: relative;
+  height: 50%;
+  width: 96%;
+  border: 1.5px solid rgba(0,0,0,0.2);
+  border-radius: 10em;
+}
+
+.infocontainer{
+  position: absolute;
+  height: 220px;
+  width: 96%;
+  border: 1.5px solid rgba(0,0,0,0.2);
+  border-radius: 2em;
+}
+
+.statusText{
+  font-family: 'Caveat';
+  color: #000000;
+  font-size: 20px;
+  font-weight: 300;
+  padding-top: 10px;
+}
+
+.titleText{
+  font-family: 'Roboto';
+  font-weight: 600;
+  font-size: 14px;
+  color: #000000;
+}
+.contentText{
+  font-family: 'Roboto';
+  font-weight: 200;
+  font-size: 14px;
+  color: #000000;
+
+}
+ul,ol,li {
+  list-style-type: none !important;
+
+}
+
+.toolContainer{
+  border-top: 1px solid rgba(0,0,0,0.2);
+  width: 100%;
+  height: 12%;
+  background-color: #00C4AB;
+  position: absolute;
+  padding-left: 20px;
+  padding-right: 20px;
+  bottom: 0;
+}
+
+.squarebut {
+  background-color: rgba(0,0,0,0);
+  border: none;
+  transition: all 0.4s;
+   height:50px;
+   width:50px;
+   cursor:pointer;
+   border-radius: 0.4em;
+}
+
+.squarebut:hover {
+  background-color: #A8FFFB;
+}
+
+div.profileuser-container{
+  background-color: #A8FFFB;
+  height: 300px;
+  position: relative;
+  padding-top: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 2em;
+}
+
+.editbut {
+  background-color: rgba(0,0,0,0);
+  border: none;
+  transition: all 0.4s;
+   height:30px;
+   width:30px;
+   cursor:pointer;
+   border-radius: 0.4em;
+   opacity: 0.4;
+}
+
+.editbut:hover {
+  opacity: 1;
+}
+
+.edittext {
+  background-color: rgba(0,0,0,0);
+  border: none;
+  transition: all 0.4s;
+   height:100%;
+   cursor:pointer;
+   border-radius: 0.4em;
+   opacity: 0.4;
+}
+
+.edittext:hover {
+  opacity: 1;
+}
+
+.saveBut{
+  background-color: #00C4AB;
+  border-color: #00C4AB;
+  color: black;
+  cursor: pointer;
+}
+
+.btn-primary:hover{
+  background-color: #A8FFFB;
+
+}
+
+div.profileHeader{
+  height: 42%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: sticky;
+  padding: 1px;
+  top:0;
+}
+div.profileContainer{
+  height: 50%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  padding: 1px;
+
+}
+div.profileSaveChanges{
+  width: 100%;
+  height: 8%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: fixed;
+  padding: 1px;
+  bottom: 0;
+}
+
+.insertGroupName{
+  width: 100%;
+  padding: 0px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  vertical-align: middle;
+}
+
+.insertGroupName input{
+  width: 100%;
+  border: 0px;
+  font-size: 17px;
+  padding-right: 80px;
+  line-height: 20px
+}
+
+.searchName{
+  width: 100%;
+  padding-bottom: 5px;
+  padding-top: 6px;
+  background-color:  white;
+}
+#sizing-addon4, .search{
+  border: none;
+  background-color:  white;
+}
+
+.searchFriendContainer{
+  width: 100%;
+  height: 380px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-right: 5px;
+  border-left: 5px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 0.5em;
+  position: relative;
+  overflow-y: scroll;
+}
+
+
+.modal-tall .modal-dialog {
+  height: 85%;
+}
+.modal-tall .modal-content {
+  height: 100%;
+}
+
+.modal-content .modal-header{
+  height: 10%;
+}
+
+.modal-content .modal-body{
+  height: 80%;
+}
+.modal-content .modal-footer{
+  height: 10%;
+}
+
+.addedFriendContainer{
+  width: 500px;
+  height: 40px; 
+  position: absolute;
+  overflow-x: scroll;
+}
+
+#ChatContainer{
+  width: 100%;
+ height: 600px;
+ position: relative;
+ overflow: hidden;  
+}
+#FriendsContainer{
+  width: 100%;
+ height: 600px;
+ position: relative;
+ overflow: hidden;  
+}
+
+.letterContainer{
+  width: 100%;
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+.ProfileContainer{
+  width: 100%;
+  height: 450px;
+  padding-top: 20px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-right: 5px;
+  border-left: 5px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 0.5em;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#ProfileInfoContainer{
+  width: 100%;
+ height: 610px;
+ position: absolute;
+overflow: hidden;  
+}
+#ImageContainer{
+  width: 100%;
+ height: 88%;
+ position: absolute;
+overflow: hidden;  
+}
+#StickerContainer{
+  width: 100%;
+ height: 88%;
+ position: absolute;
+overflow: hidden;  
+}
+#AttachmentContainer{
+  width: 100%;
+ height: 88%;
+ position: absolute;
+overflow: hidden;  
+}
+.ItemContainer{
+  width: 100%;
+  height: 86%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.thumbnail {
+  position: relative;
+  width: 50%;
+  height: 100px;
+  overflow: hidden;
+  padding: 0px;
+ margin: 0px;
+ border: none;
+}
+
+.thumbnail img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
+.thumbnailmiddletop {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.thumbnailmiddlebottom{
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;  
+}
+
+.thumbnailelement{
+  opacity: 0;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 10px;
+}
+
+.image {
+  opacity: 1;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.thumbnail:hover.image{
+  opacity: 0.6;
+  cursor: pointer;
+
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: white;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #A8FFFB;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  height: auto;
+  width: auto;
+  position: relative;
+
+}

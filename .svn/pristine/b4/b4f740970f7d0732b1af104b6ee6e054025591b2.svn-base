@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="chat.css">
+</head>
+<body>
+	<div class="wrapper">
+		<main>
+			<div class="col-left">
+				<div class="col-content">
+					<dir class="messages">
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+					<li>ABC</li>
+						
+					</dir>
+				</div>
+				
+			</div>
+		</main>
+		
+	</div>
+
+</body>
+</html>

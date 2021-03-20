@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChitChatChew</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Caveat:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script&amp;subset=vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/template.css">
+</head>
+
+<body class="background-image-color">
+    <nav class="navbar navbar-default navbar-color">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" style="border-width: 0px; background-color: #00C4AB;">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" id="active" href="#">
+                    <img class="brand-img" alt="Brand" src="~/Content/Icons/brand.png">
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border-width: 0px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Contact","Home")"><i class="fas fa-headset"></i>Contact Us <span class="sr-only">(current)</span></a></li>
+                    @if (ViewBag.currentUser == null)
+                    {
+                        <li><a href="@Url.Action("Login","Users")"><i class="fas fa-sign-in-alt"></i>Sign in</a></li>
+                        <li id="active"><a href="@Url.Action("Signup","Users")"><i class="fas fa-user-plus"></i>Create an account</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Chat","Home")">Welcome back, @ViewBag.currentUser.username</a></li>
+                        <li><a href="@Url.Action("Logout","Users")"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bacground-img">
+        <div class="background-image-filter">
+            <div class="firstpage">
+                <a href="#"><img src="~/Content/Icons/brand-color.png" style="height:70px; width:100px"></a>
+                <div style="background-image: url('~/Content/Images/blackbar-landing.png'); padding-bottom: 15px; margin-bottom: 10em;">
+                    <h2 style="margin-top: 0px; font-weight: bold"><a href="#" class="yellowText brandText signup-nonhover">ChitChatChew</a></h2>
+                    <p style="font-size: 2.5em; color: white;">Where conversation becomes recreation</p><br><br><br>
+                    <p style="font-size: 1.5em; font-family: 'Segoe Script'; color: white; margin-bottom: 50px;">
+                        ChitChatChew serves more than 30 million users<br>50,000 messages send every second<br>30,000 images and videos share every minute
+                    </p>
+                    <button type="button" class="btn btn-primary btn-lg button-letchat" onclick = 'window.location.href = "@Url.Action("Chat","Home")"' >Let's chat now</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- other side -->
+        <div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    var contactSuccess = "@TempData["postContactSuccess"]" != "@null";
+    if (contactSuccess) {
+        alert("@TempData["postContactSuccess"]");
+    }
+</script>
